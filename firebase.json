@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "build",
+    "site":"roi-nadlan",
     "ignore": [
       "firebase.json",
       "**/.*",

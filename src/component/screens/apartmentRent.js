@@ -1,14 +1,14 @@
 import React from 'react';
 import Header from '../header';
 
-const ContactUs = () => {
+const ApartmentRent = () => {
 
     return (
         <div>
             <Header />
-           contact us
+           apartment rent
         </div>
     )
 }
 
-export default ContactUs;
+export default ApartmentRent;

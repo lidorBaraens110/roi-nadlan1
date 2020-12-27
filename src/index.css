@@ -1,13 +1,103 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.image-card {
+  height: 24.15rem;
+  width: auto;
+  object-fit: scale-down;
+}
+.image-map {
+  height: 10rem;
+  width: auto;
+  object-fit: scale-down;
+}
+.image-card:hover {
+  opacity: 0.8;
+}
+.crop {
+  width: 28rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.crop-map {
+  width: 14rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+​ .all-estate {
+  border-radius: 0;
+  background-color: #000000;
+  color: green;
+}
+.all-estate:hover {
+  background-color: white;
+  color: black;
+}
+.sub-header {
+  height: 43rem;
+  position: relative;
+  overflow: hidden;
+}
+.logo-subheader {
+  height: 10rem;
+  top: 15rem;
+  left: 2rem;
+  position: absolute;
+  z-index: 2;
+}
+.image-subheader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  opacity: 0.6;
+}
+
+.firsth1 {
+  font-size: 4rem;
+  position: absolute;
+  right: 6rem;
+  top: 12rem;
+}
+.secondh1 {
+  position: absolute;
+  left: 10rem;
+  top: 26.5rem;
+}
+@media only screen and (max-width: 768px) {
+  .sub-header {
+    height: 23.5rem;
+  }
+  .logo-subheader {
+    top: 17rem;
+    left: 10rem;
+    height: 5rem;
+  }
+  .image-card {
+    height: 18rem;
+    width: 100%;
+    object-fit: scale-down;
+  }
+  .firsth1 {
+    visibility: hidden;
+  }
+  .secondh1 {
+    top: 22rem;
+    font-size: 1.5rem;
+    left: 12rem;
+  }
 }
