@@ -1,53 +1,59 @@
 import React, { useState } from 'react';
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
-import { Card } from '@material-ui/core';
+import { Button, Card } from '@material-ui/core';
 import AspectRatioIcon from '@material-ui/icons/AspectRatio';
 
-const TheCard = ({ item, styleImg, styleCard }) => {
+const TheCard = ({ item, imgClass, onClick, cardName }) => {
 
     return (
-        <Card raised dir='rtl' style={styleCard}>
+        <Card dir='rtl' className={cardName} style={{ borderRadius: 0, marginBottom: '1rem', padding: '0' }}>
             {item.images != null &&
                 <div style={{ position: 'relative' }}>
-                    <img className='image-card'
-                        style={styleImg}
-                        src={item.images[0].url}
+                    <img className={imgClass} onClick={() => onClick(item)}
+                        src={item.images[0] ? item.images[0].url : item.images[1].url}
                     />
+                    {item.sell !== undefined && <div style={{
+                        position: 'absolute', top: 0, left: 0,
+                        padding: '0.25rem 0.5rem', backgroundColor: !item.sell ? 'green' : 'red'
+                        , fontWeight: '400', color: 'white', fontSize: '0.8rem'
+                    }}>
+                        {item.sell ? 'נמכר' : 'למכירה'}
+                    </div>
+                    }
                     <span style={{
-                        color: 'black', position: 'absolute', bottom: 0,
-                        right: '1rem', fontSize: '1.5rem', fontWeight: '500'
+                        color: 'black', position: 'absolute', bottom: '0.5rem', padding: '0 0.2rem',
+                        fontSize: '0.8rem', right: '0.5rem', fontWeight: '500', backgroundColor: 'black', color: 'white'
                     }}>₪{item.price}</span>
                 </div>
             }
 
-            <div style={{ textAlign: 'right', padding: '2rem 1rem 1rem' }}>
+            <div style={{ textAlign: 'right', padding: '1rem' }}>
                 <div className='crop'>
-                    <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#3ca2c3' }}>{item.name}</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: '500', color: '#3ca2c3' }}>{item.name}</span>
                 </div>
-                <div style={{ margin: '1rem 0' }}>
+                <div style={{ padding: '0.5rem 0', fontSize: '0.7rem' }}>
                     <span >{item.address}, {item.city}</span>
                 </div>
-                <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'row', paddingTop: '0.5rem' }}>
-                    <div style={{ flex: 1, flexDirection: 'row', display: 'flex' }}>
-                        <MeetingRoomIcon fontSize='medium' />
-
-
-                        <span style={{ fontSize: '1rem', paddingRight: '0.5rem' }} >{item.rooms} </span>
+                <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'row' }}>
+                    <div style={{ flex: 1.5, flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
+                        <MeetingRoomIcon fontSize='inherit' />
+                        <span style={{ fontSize: '0.8rem', paddingRight: '0.2rem', }} >{item.rooms} </span>
                     </div>
-                    <div style={{ flex: 1, flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
+                    <div style={{ flex: 1.5, flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
 
-                        <DirectionsCarIcon fontSize='medium' />
+                        <DirectionsCarIcon fontSize='inherit' />
 
-                        <span style={{ paddingRight: '0.5rem' }}>
+                        <span style={{ paddingRight: '0.2rem', fontSize: '0.8rem' }}>
                             {item.parking === true ? 'יש' : 'אין'}
                         </span>
                     </div>
                     <div style={{ flex: 1.5, flexDirection: 'row', display: 'flex', alignItems: 'center' }}>
-                        <AspectRatioIcon fontSize='medium' />
-                        <span style={{ paddingRight: '0.5rem' }}>{item.size}</span>
+                        <AspectRatioIcon fontSize='inherit' />
+                        <span style={{ paddingRight: '0.2rem', fontSize: '0.8rem' }}>{item.size} מ"ר</span>
                     </div>
-                    <div style={{ flex: 2 }}></div>
+                    <div style={{ flex: 2, textAlign: 'left' }}>
+                        <Button style={{ backgroundColor: '#3ca2c3', color: 'white', fontSize: '0.7rem' }} onClick={() => onClick(item)}>{'לפרטים>'}</Button></div>
 
                 </div>
 

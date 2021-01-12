@@ -4,7 +4,8 @@ import HeaderLogin from '../../../component/headerLogin';
 // import Loader from 'react-loader-spinner';
 import { Grid, Button, Typography } from '@material-ui/core';
 import firebase from '../../../firebase';
-import ApartmentCard from '../../apartmentCard';
+// import ApartmentCard from '../../apartmentCard';
+import Card from '../../card';
 
 
 
@@ -13,10 +14,19 @@ import ApartmentCard from '../../apartmentCard';
 const LoginHome = () => {
     const history = useHistory()
     const [itemList, setItemList] = useState([]);
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        var user = firebase.auth().currentUser
+        if (!user) {
+            history.push('/login')
+        }
+    }, [])
+
+    useEffect(() => {
+
         loadItems();
+
     }, [])
 
     const loadItems = () => {
@@ -29,7 +39,6 @@ const LoginHome = () => {
                 for (var item in data) {
                     console.log(data)
                     setItemList(preValue => [...preValue, data[item]])
-
                 }
                 setLoading(false)
             }
@@ -43,7 +52,9 @@ const LoginHome = () => {
     return (
         <div style={{ textAlign: 'center' }}>
             <HeaderLogin />
-            {loading ? <div>d</div> :
+
+            { loading ?
+                <div>loading...</div> :
                 /* <Loader
                     style={{ padding: '10%' }}
                     type="Puff"
@@ -52,21 +63,20 @@ const LoginHome = () => {
                     width={100}
                     timeout={5000} //3 secs
                 /> : */
-                (itemList.length > 0 && <Grid container justify='space-between' >
-                    {itemList.map((item, i) => {
-                        console.log(item);
-                        return <Grid item
-                            style={{
-                                padding: '2rem'
-                            }}
-                            key={i}
-                            sm={12} md={12} lg={6} xl={6}
-                        >
-                            <ApartmentCard rooms={item.rooms} name={item.name} address={item.address} onClick={() => editItem(item)} images={item.images} />
-                        </Grid>
-                    })}
+                (itemList.length > 0 &&
+                    <Grid container  >
+                        {itemList.map((item, i) => {
+                            console.log(item);
+                            return <Grid item
+                                key={i}
+                                xs={12} sm={12} md={6} lg={6} xl={6}
+                            >
+                                {/* <ApartmentCard rooms={item.rooms} name={item.name} address={item.address} onClick={() => editItem(item)} images={item.images} /> */}
+                                <Card item={item} onClick={editItem} imgClass='login-home-images' />
+                            </Grid>
+                        })}
 
-                </Grid>
+                    </Grid>
                 )
             }
         </div >

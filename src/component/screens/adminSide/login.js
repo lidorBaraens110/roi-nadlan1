@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
 const Login = () => {
+
     const [user, setUser] = useState({ email: '', password: '' })
 
     const history = useHistory();
@@ -16,10 +17,17 @@ const Login = () => {
         });
     }
     useEffect(() => {
-        console.log('sadasd:' + JSON.stringify(process.env))
+        var user = firebase.auth().currentUser;
+        if (user) {
+            console.log(user)
+            history.push('/login/home')
+        } else {
+            console.log('not logged in')
+        }
     }, [])
 
     const handleLogin = () => {
+
 
         firebase.auth().signInWithEmailAndPassword(user.email, user.password)
             .then((user) => {
@@ -33,14 +41,18 @@ const Login = () => {
             });
     }
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center', flexDirection: 'column', padding: '10% 40%' }}>
+        <div
+            style={{
+                display: 'flex', justifyContent: 'center', textAlign: 'center',
+                flexDirection: 'column', padding: '10% 20%'
+            }}>
             <h1>רועי נדלן</h1>
-            <input style={{ padding: '1rem', margin: '1rem' }} placeholder='שם משתמש' class="form-control top" name='email' onChange={handleChange} />
+            <input style={{ padding: '1rem', margin: '1rem' }} placeholder='שם משתמש' name='email' onChange={handleChange} />
 
 
-            <input style={{ padding: '1rem', margin: '1rem' }} placeholder="סיסמא" type="password" class="form-control bottom" name='password' onChange={handleChange} />
+            <input style={{ padding: '1rem', margin: '1rem' }} placeholder="סיסמא" type="password" name='password' onChange={handleChange} />
 
-            <Button style={{ padding: '1rem', margin: '1rem' }} onClick={handleLogin} class="btn btn-lg btn-primary btn-block"><text>היכנס</text></Button>
+            <Button style={{ padding: '1rem', margin: '1rem' }} onClick={handleLogin}><text>היכנס</text></Button>
 
 
         </div>

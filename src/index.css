@@ -1,29 +1,87 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  max-width: 100%;
+  width: 100%;
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale; */
 }
-
+h1,
+h2,
+h3,
+h4,
+h5,
+span,
+div {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+/* 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+} */
+.grid-apartment-sell {
+  padding: 2% 12%;
 }
-
+.login-home-images {
+  width: 30rem;
+  height: auto;
+}
+.apartment-page-carousel {
+  padding: 0 15%;
+}
+.home-card-apartment:hover {
+  border: 2px solid black;
+  opacity: 0.8;
+}
+.contact-content {
+  padding: 0 15rem;
+}
+.user-details {
+  border: 2px solid black;
+  margin: 0% 25% 4% 25%;
+  padding-bottom: 1rem;
+}
+.icon-property {
+  align-self: center;
+  width: 3vw;
+  height: auto;
+}
+.image-recommended {
+  width: auto;
+  height: 100%;
+}
+.home-recommended {
+  padding: 2rem;
+}
 .image-card {
   height: 24.15rem;
   width: auto;
   object-fit: scale-down;
 }
 .image-map {
-  height: 10rem;
+  height: 9rem;
   width: auto;
   object-fit: scale-down;
 }
-.image-card:hover {
+.contact-icon {
+  width: 6rem;
+  height: auto;
+  padding: 1rem;
+}
+/* .image-card:hover {
   opacity: 0.8;
+} */
+.mapboxgl-popup-close-button {
+  background-color: white !important;
+}
+.mapboxgl-popup-content {
+  border: 1px solid black;
+  padding: 0 !important;
 }
 .crop {
   width: 28rem;
@@ -32,10 +90,10 @@ code {
   white-space: nowrap;
 }
 .crop-map {
-  width: 14rem;
+  white-space: pre-wrap;
+  width: 10rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 ​ .all-estate {
   border-radius: 0;
@@ -46,58 +104,178 @@ code {
   background-color: white;
   color: black;
 }
+.footer-map {
+  height: auto;
+  width: 60%;
+  padding-bottom: 2rem;
+}
 .sub-header {
-  height: 43rem;
+  padding: 0;
+  margin: 0;
   position: relative;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .logo-subheader {
-  height: 10rem;
-  top: 15rem;
-  left: 2rem;
+  background-color: #f0f8ff;
+  opacity: 0.7;
+  top: 45%;
+  padding: 0.5rem;
+  border-radius: 20px 20px;
+  animation: fadeIn ease 20s;
   position: absolute;
-  z-index: 2;
+}
+
+.recommended-card-home {
+  background-color: white;
+  text-align: right;
+  font-size: 1em;
+  border: 1px solid black;
+  border-radius: 0%;
+  margin: 0 20%;
+  padding: 0 2rem;
 }
 .image-subheader {
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
   height: auto;
-  opacity: 0.6;
+  /* opacity: 0.7; */
+}
+.apartment-images {
+  height: 20rem;
+  width: 100%;
+}
+.apartment-card {
+  height: auto;
+  width: 29rem;
+  object-fit: scale-down;
+}
+.image-sell-apartment {
+  width: 100%;
+  height: auto;
+}
+.slide-image {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+.slide-image:hover {
+  opacity: 0.8;
+}
+.grid-rec {
+  padding: 1rem 15%;
 }
 
 .firsth1 {
-  font-size: 4rem;
+  font-size: 3rem;
   position: absolute;
-  right: 6rem;
-  top: 12rem;
+  right: 3.5rem;
+  top: 8rem;
+}
+.apartment-page-title {
+  font-size: 2rem;
 }
 .secondh1 {
   position: absolute;
-  left: 10rem;
-  top: 26.5rem;
+  left: 14rem;
+  top: 18rem;
+}
+.map-padding {
+  padding: 0 13.5%;
 }
 @media only screen and (max-width: 768px) {
-  .sub-header {
-    height: 23.5rem;
-  }
   .logo-subheader {
-    top: 17rem;
-    left: 10rem;
-    height: 5rem;
+    top: 5rem;
+
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center; */
+    /* visibility: hidden; */
+  }
+  .sub-h1 {
+    font-size: 1.5rem;
+  }
+  .sub-h3 {
+    font-size: 1rem;
   }
   .image-card {
     height: 18rem;
     width: 100%;
     object-fit: scale-down;
   }
+  .image-apartment {
+    border: 2px solid black;
+    width: 100%;
+    height: 10rem;
+    object-fit: contain;
+  }
   .firsth1 {
     visibility: hidden;
   }
+
   .secondh1 {
-    top: 22rem;
+    top: 10rem;
     font-size: 1.5rem;
-    left: 12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .footer-map {
+    height: auto;
+    width: 100%;
+  }
+  .slide-image {
+    width: 100%;
+  }
+  .crop {
+    width: 100%;
+  }
+  .icon-property {
+    width: 7vw;
+  }
+
+  .free-context {
+    padding: 1rem 10%;
+  }
+  .user-details {
+    margin: 8% 0;
+  }
+  .home-recommended {
+    padding: 0;
+  }
+  .recommended-card-home {
+    margin: 0 5%;
+    font-size: 0.8rem;
+  }
+  .image-recommended {
+    width: 100%;
+  }
+  .contact-content {
+    padding: 0;
+  }
+  .grid-apartment-sell {
+    padding: 2% 0;
+  }
+  .grid-rec {
+    padding: 1rem 0;
+  }
+  .map-padding {
+    padding: 0;
+  }
+  .apartment-page-carousel {
+    padding: 0;
+  }
+  .contact-icon {
+    width: 25vw;
+  }
+  .font-icon-contact {
+    font-size: 0.8rem;
+  }
+  .apartment-page-title {
+    font-size: 1rem;
   }
 }

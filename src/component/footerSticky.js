@@ -2,8 +2,6 @@ import React from 'react';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import { IconButton } from '@material-ui/core';
-import ReactWhatsapp from 'react-whatsapp';
-import axios from 'axios'
 
 const FooterSticky = () => {
     // const whatsApp = () => {
@@ -29,11 +27,11 @@ const FooterSticky = () => {
         // style = {{ position: 'sticky', bot: 0, display: 'flex', flexDirection: 'row', textAlign: 'center' }}>
         >
             <IconButton style={{ padding: 0 }} href={facebookSite}>
-                <FacebookIcon fontSize='large' style={{ color: 'blue' }} />
+                <FacebookIcon style={{ color: 'blue' }} />
             </IconButton>
             <IconButton style={{ padding: 0 }}
-                href='https://api.whatsapp.com/send?phone=+972526862409&text=%20שלום הייתי רוצה לשמוע הצעות לדירות לקניה'>
-                <WhatsAppIcon fontSize='large' style={{ color: 'green' }} />
+                href='https://api.whatsapp.com/send?phone=+972509677226&text=%20שלום הייתי רוצה לשמוע הצעות לדירות לקניה'>
+                <WhatsAppIcon style={{ color: 'green' }} />
             </IconButton>
         </div>
     )

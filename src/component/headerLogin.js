@@ -36,6 +36,9 @@ const HeaderLogin = () => {
     const uploadRecommended = () => {
         history.push('/login/recommended');
     }
+    const checkMessage = () => {
+        history.push('/login/checkMessage')
+    }
 
     return (
         <div className={classes.root}>
@@ -54,6 +57,11 @@ const HeaderLogin = () => {
                     <Button onClick={uploadRecommended} style={{ flex: 1 }}>
                         <Typography variant="h6" className={classes.title}>
                             העלה המלצה
+                    </Typography>
+                    </Button>
+                    <Button onClick={checkMessage} style={{ flex: 1 }}>
+                        <Typography variant="h6" className={classes.title}>
+                            הודעות
                     </Typography>
                     </Button>
                 </Toolbar>
