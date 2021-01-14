@@ -30,7 +30,9 @@ const TheCard = ({ item, imgClass, onClick, cardName }) => {
 
             <div style={{ textAlign: 'right', padding: '1rem' }}>
                 <div className='crop'>
-                    <span style={{ fontSize: '0.8rem', fontWeight: '500', color: '#3ca2c3' }}>{item.name}</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: '500', color: '#3ca2c3' }}>
+                        {item.name}
+                    </span>
                 </div>
                 <div style={{ padding: '0.5rem 0', fontSize: '0.7rem' }}>
                     <span >{item.address}, {item.city}</span>

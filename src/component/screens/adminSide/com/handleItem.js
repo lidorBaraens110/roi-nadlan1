@@ -19,12 +19,12 @@ const initialItem = {
     size: '',
     floor: '',
     rooms: '',
+    enterDate: '',
+    price: '',
     parking: false,
     balcony: false,
     elevator: false,
     sell: false,
-    enterDate: '',
-    price: '',
     freeContext: '',
     favorite: '',
     favorites: [],
@@ -56,6 +56,7 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm }) => {
     const [imageAsFile, setImageAsFile] = useState('');
 
     const handleChange = (e) => {
+        setImgPercent(0)
         const image = e.target.files[0]
         setImageAsFile(image)
     }
@@ -122,7 +123,7 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm }) => {
         var imageRef = storageRef.child(`images/${image.name}`);
         // Delete the file
         imageRef.delete().then(function () {
-            updateTheImage()
+            if (!upload) { updateTheImage() }
             // File deleted successfully
         }).catch(function (error) {
             // Uh-oh, an error occurred!
@@ -204,7 +205,7 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm }) => {
         console.log(item.favorite)
 
         setItem(preValue => {
-            return { ...preValue, favorites: [...item.favorites, item.favorite] }
+            return { ...preValue, favorites: [...item.favorites, item.favorite], favorite: '' }
         })
     }
     const removeFromFavorites = (i) => {
@@ -222,7 +223,13 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm }) => {
 
     return (
         <div>
-            <form style={{ textAlign: 'right', display: 'flex', flexDirection: 'column' }}>
+            <div dir='rtl' noValidate style={{
+                textAlign: 'right',
+                display: 'table',
+                width: '100%', /*Optional*/
+                tableLayout: 'fixed', /*Optional*/
+                borderSpacing: '10px' /*Optional*/
+            }}>
                 {Object.keys(item).map((key, i) => {
 
                     if (key === 'images') {
@@ -234,10 +241,10 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm }) => {
                         </div>
                     } else {
                         if (item[key] === false || item[key] === true) {
-                            return <div key={i}>
-                                <text>{key}</text>
-                                <input type='checkbox' style={{ fontSize: '20px', margin: '1rem' }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
+                            return <div key={i} >
 
+                                <input type='checkbox' style={{ fontSize: '20px', margin: '1rem' }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
+                                <text>{key}</text>
                             </div>
                         }
                         if (key == 'favorite') {
@@ -255,24 +262,26 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm }) => {
                         }
                         if (key === 'freeContext') {
 
-                            return <div key={i}>
-                                <textarea placeholder='טקסט חופשי' onKeyPress={handleItemChange} style={{ fontSize: '20px', margin: '1rem' }} name={key} key={i} value={item[key]} onChange={handleItemChange} cols="40" rows="5" />
+                            return <textarea key={i} placeholder='טקסט חופשי' onKeyPress={handleItemChange}
+                                style={{ fontSize: '20px', margin: '1rem' }} name={key} key={i} value={item[key]} onChange={handleItemChange} cols="40" rows="5" />
 
-                            </div>
+
                         }
                         if (typeof (key) === 'string' && key !== 'itemId' && key !== 'favorites') {
-                            return <div key={i} >
+                            return <TextField dir='rtl' id="standard-basic" label={key} variant='outlined'
+                                style={{
+                                    fontSize: '20px', display: 'inline-block', direction: 'rtl'
+                                    /*Optional*/
+                                }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
 
-                                <TextField required dir='rtl' id="standard-basic" label={key} variant='outlined' style={{ fontSize: '20px', margin: '1rem' }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
 
-                            </div>
                         }
                     }
 
 
                 })}
-            </form>
-  );
+            </div>
+
             <Dialog
                 style={{ textAlign: 'center' }}
                 open={pop}
@@ -312,18 +321,19 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm }) => {
 
 
 
-            {item.images !== [] && <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <Grid container spacing={5}>
-                    {item.images.map((image, i) => {
+            {
+                item.images !== [] && <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Grid container spacing={5}>
+                        {item.images.map((image, i) => {
 
-                        return <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-                            {<span>{i === 0 ? 'תמונה ראשית' : i}</span>}
-                            <img height='auto' width='100%' src={image.url} alt="image tag" />
-                            <IconButton onClick={() => deletePicture(image)}><HighlightOffIcon /></IconButton>
-                        </Grid>
-                    })}
-                </Grid>
-            </div>
+                            return <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+                                {<span>{i === 0 ? 'תמונה ראשית' : i}</span>}
+                                <img height='auto' width='100%' src={image.url} alt="image tag" />
+                                <IconButton onClick={() => deletePicture(image)}><HighlightOffIcon /></IconButton>
+                            </Grid>
+                        })}
+                    </Grid>
+                </div>
             }
             <button onClick={() => test()}>לחץ לפרטים</button>
             <button style={{ fontSize: '16' }} onClick={upload ? uploadTheItem : editTheItem}>{UpButtonSpan}</button>

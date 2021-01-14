@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
 import Header from '../../header';
 import Footer from '../../footer';
 import FooterSticky from '../../footerSticky';
@@ -11,6 +12,7 @@ import RowImgPhone from '../../../assets/article-wide-phone.jpg';
 import RowArtBeta from '../../../assets/z.jpg';
 
 const OurStory = () => {
+    const location = useLocation()
     const [load, setLoad] = useState(false);
     const recommended = useItems().recommended;
     const [mobileView, setMobileView] = useState(false)
@@ -26,6 +28,9 @@ const OurStory = () => {
         window.addEventListener("resize", () => setResponsiveness());
     }, [])
     useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [location]);
+    useEffect(() => {
         console.log(recommended)
         setLoad(true)
     }, [recommended])
@@ -33,7 +38,6 @@ const OurStory = () => {
         <div style={{ textAlign: 'center', backgroundColor: 'rgb(243, 243, 241)' }}>
             <Header stat={true} backgroundColor={true} />
             <h4 style={{ marginTop: '1rem' }}>כתבו עלינו</h4>
-            {/* <div style={{ margin: '1rem 15%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}> */}
             <Grid container
                 className='grid-rec'>
                 <Grid item xs={12} sm={12} md={6} lg={6} xl={6} style={{ paddingBottom: '1rem' }}>
@@ -56,19 +60,7 @@ const OurStory = () => {
                 </Grid>
 
             </Grid>
-            {/* <div style={{ textAlign: 'left' }}>
-                    <img src={ReportImg} />
-                    <br />
-                    <a href='https://www.themarker.com/labels/1.9407813'>לכתבה המלאה</a>
-                </div>
-                <div style={{ fontSize: '0.8rem', textAlign: 'left' }}>
-                    <img src={RowArtBeta} />
-                    <br />
 
-                    <a href='https://www.themarker.com/labels/local/1.9363555'>{'לכתבה המלאה'}</a>
-
-                </div> */}
-            {/* </div> */}
             {!load ? <div>loading...</div> : < div style={{ padding: '0 2rem 2rem' }}>
                 <Recommended recommended={recommended} />
             </div>}

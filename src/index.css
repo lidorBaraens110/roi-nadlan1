@@ -14,101 +14,16 @@ h3,
 h4,
 h5,
 span,
+p,
+text,
 div {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 }
-/* 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-} */
-.grid-apartment-sell {
-  padding: 2% 12%;
-}
-.login-home-images {
-  width: 30rem;
-  height: auto;
-}
-.apartment-page-carousel {
-  padding: 0 15%;
-}
-.home-card-apartment:hover {
-  border: 2px solid black;
-  opacity: 0.8;
-}
-.contact-content {
-  padding: 0 15rem;
-}
-.user-details {
-  border: 2px solid black;
-  margin: 0% 25% 4% 25%;
-  padding-bottom: 1rem;
-}
-.icon-property {
-  align-self: center;
-  width: 3vw;
-  height: auto;
-}
-.image-recommended {
-  width: auto;
-  height: 100%;
-}
-.home-recommended {
-  padding: 2rem;
-}
-.image-card {
-  height: 24.15rem;
-  width: auto;
-  object-fit: scale-down;
-}
-.image-map {
-  height: 9rem;
-  width: auto;
-  object-fit: scale-down;
-}
-.contact-icon {
-  width: 6rem;
-  height: auto;
-  padding: 1rem;
-}
-/* .image-card:hover {
-  opacity: 0.8;
-} */
-.mapboxgl-popup-close-button {
-  background-color: white !important;
-}
-.mapboxgl-popup-content {
-  border: 1px solid black;
-  padding: 0 !important;
-}
-.crop {
-  width: 28rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.crop-map {
-  white-space: pre-wrap;
-  width: 10rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-​ .all-estate {
-  border-radius: 0;
-  background-color: #000000;
-  color: green;
-}
-.all-estate:hover {
-  background-color: white;
-  color: black;
-}
-.footer-map {
-  height: auto;
-  width: 60%;
-  padding-bottom: 2rem;
-}
+
+/* home page */
+
 .sub-header {
   padding: 0;
   margin: 0;
@@ -118,7 +33,6 @@ code {
   justify-content: center;
   align-items: center;
 }
-
 .logo-subheader {
   background-color: #f0f8ff;
   opacity: 0.7;
@@ -128,7 +42,6 @@ code {
   animation: fadeIn ease 20s;
   position: absolute;
 }
-
 .recommended-card-home {
   background-color: white;
   text-align: right;
@@ -138,19 +51,30 @@ code {
   margin: 0 20%;
   padding: 0 2rem;
 }
+.header-img-home-group {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.home-card-apartment:hover {
+  border: 2px solid black;
+  opacity: 0.8;
+}
+.image-recommended {
+  width: auto;
+  height: 100%;
+}
+.home-recommended {
+  padding: 2rem;
+}
+.crop {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .image-subheader {
   width: 100%;
   height: auto;
-  /* opacity: 0.7; */
-}
-.apartment-images {
-  height: 20rem;
-  width: 100%;
-}
-.apartment-card {
-  height: auto;
-  width: 29rem;
-  object-fit: scale-down;
 }
 .image-sell-apartment {
   width: 100%;
@@ -164,36 +88,85 @@ code {
 .slide-image:hover {
   opacity: 0.8;
 }
-.grid-rec {
-  padding: 1rem 15%;
-}
 
-.firsth1 {
-  font-size: 3rem;
-  position: absolute;
-  right: 3.5rem;
-  top: 8rem;
+/* apartment page */
+.apartment-page-carousel {
+  padding: 0 15%;
 }
 .apartment-page-title {
   font-size: 2rem;
 }
-.secondh1 {
-  position: absolute;
-  left: 14rem;
-  top: 18rem;
+.icon-property {
+  align-self: center;
+  width: 3vw;
+  height: auto;
+}
+/* apartment sell */
+.grid-apartment-sell {
+  padding: 2% 12%;
 }
 .map-padding {
   padding: 0 13.5%;
 }
+.apartment-card {
+  height: auto;
+  width: 29rem;
+  object-fit: scale-down;
+}
+.image-map {
+  height: 9rem;
+  width: auto;
+  object-fit: scale-down;
+}
+.login-home-images {
+  width: 30rem;
+  height: auto;
+}
+.mapboxgl-popup-close-button {
+  background-color: white !important;
+}
+.mapboxgl-popup-content {
+  border: 1px solid black;
+  padding: 0 !important;
+}
+
+/* contact page */
+.contact-content {
+  padding: 0 15rem;
+}
+.user-details {
+  border: 2px solid black;
+  margin: 0% 25% 4% 25%;
+  padding-bottom: 1rem;
+}
+.contact-icon {
+  width: 6rem;
+  height: auto;
+  padding: 1rem;
+}
+/* our story */
+
+.grid-rec {
+  padding: 1rem 15%;
+}
+
+/* header/footer */
+.footer-map {
+  height: auto;
+  width: 60%;
+  padding-bottom: 2rem;
+}
+
 @media only screen and (max-width: 768px) {
+  /* home */
   .logo-subheader {
     top: 5rem;
-
-    /* display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center; */
-    /* visibility: hidden; */
+  }
+  .header-img-home-group {
+    font-size: 1.1rem;
+  }
+  .sub-header-img-home-group {
+    font-size: 0.7rem;
   }
   .sub-h1 {
     font-size: 1.5rem;
@@ -201,81 +174,55 @@ code {
   .sub-h3 {
     font-size: 1rem;
   }
-  .image-card {
-    height: 18rem;
-    width: 100%;
-    object-fit: scale-down;
-  }
-  .image-apartment {
-    border: 2px solid black;
-    width: 100%;
-    height: 10rem;
-    object-fit: contain;
-  }
-  .firsth1 {
-    visibility: hidden;
-  }
-
-  .secondh1 {
-    top: 10rem;
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-  .footer-map {
-    height: auto;
-    width: 100%;
-  }
   .slide-image {
     width: 100%;
-  }
-  .crop {
-    width: 100%;
-  }
-  .icon-property {
-    width: 7vw;
-  }
-
-  .free-context {
-    padding: 1rem 10%;
-  }
-  .user-details {
-    margin: 8% 0;
   }
   .home-recommended {
     padding: 0;
   }
   .recommended-card-home {
     margin: 0 5%;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
   }
-  .image-recommended {
-    width: 100%;
-  }
-  .contact-content {
-    padding: 0;
-  }
+  /* apartment sell */
   .grid-apartment-sell {
     padding: 2% 0;
-  }
-  .grid-rec {
-    padding: 1rem 0;
   }
   .map-padding {
     padding: 0;
   }
+  /* apartment page */
+  .icon-property {
+    width: 7vw;
+  }
+  .apartment-page-title {
+    font-size: 1rem;
+  }
   .apartment-page-carousel {
     padding: 0;
+  }
+  /* contact us */
+  .user-details {
+    margin: 8% 0;
   }
   .contact-icon {
     width: 25vw;
   }
+  .contact-content {
+    padding: 0;
+  }
   .font-icon-contact {
     font-size: 0.8rem;
   }
-  .apartment-page-title {
-    font-size: 1rem;
+  /* our story  */
+  .grid-rec {
+    padding: 1rem 0;
+  }
+  /* our group */
+
+  /* header/footer */
+  .footer-map {
+    height: auto;
+    width: 100%;
   }
 }

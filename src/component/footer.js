@@ -15,7 +15,7 @@ const useStyle = makeStyles(theme => ({
 }));
 
 const Footer = () => {
-    const facebookPage = 'https://www.facebook.com/sharer/sharer.php?u=https://www.facebook.com/%D7%A8%D7%95%D7%A2%D7%99-%D7%A8%D7%99%D7%A0%D7%98-%D7%99%D7%95%D7%A2%D7%A5-%D7%95%D7%9E%D7%A9%D7%95%D7%95%D7%A7-%D7%A0%D7%93%D7%9C%D7%9F-375132793057269'
+    const facebookPage = 'https://www.facebook.com/sharer/sharer.php?u=www.rind-nadlan.com&display=popup'
     const classes = useStyle();
     return (
         <div style={{ backgroundColor: '#2B3856', paddingBottom: '2rem' }}>

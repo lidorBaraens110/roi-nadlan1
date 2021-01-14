@@ -15,8 +15,7 @@ export const ItemProvider = ({ children }) => {
         generalMessages: [],
         nameMessages: []
     })
-    // const [apartment, setApartment] = useState([])
-    // const [recommended, setRecommended] = useState([])
+
     useEffect(() => {
         loadItems();
         loadRecommended();

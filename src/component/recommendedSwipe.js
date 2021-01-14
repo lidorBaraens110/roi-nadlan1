@@ -68,7 +68,7 @@ const RecommendedSwipe = ({ recommended }) => {
                                 marginLeft: '0.3rem',
                                 display: "inline-block",
                                 backgroundColor: i === index ? 'black' : 'white',
-                                borderRadius: '50%',
+                                borderRadius: '100%',
                                 border: 'solid black 1px'
                             }} ></div>
                     })
@@ -76,7 +76,7 @@ const RecommendedSwipe = ({ recommended }) => {
                 <br />
 
 
-                <Button onClick={() => setOpen(preVal => !preVal)} style={{ padding: '0.5 1rem', backgroundColor: 'blue', color: 'white', fontWeight: '500', borderRadius: '10 %' }}>
+                <Button onClick={() => setOpen(preVal => !preVal)} style={{ padding: '0.5 1rem', backgroundColor: '#4169E1', color: 'white', fontWeight: '500', borderRadius: '0%' }}>
                     להמלצה המקורית
                 </Button>
 

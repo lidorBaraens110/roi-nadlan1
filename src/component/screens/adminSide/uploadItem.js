@@ -48,12 +48,12 @@ const UploadImage = () => {
         size: '',
         floor: '',
         rooms: '',
+        enterDate: '',
+        price: '',
         parking: false,
         balcony: false,
         elevator: false,
         sell: false,
-        enterDate: '',
-        price: '',
         freeContext: '',
         favorite: '',
         favorites: [],
@@ -200,106 +200,7 @@ const UploadImage = () => {
                     <br />
                     <HandleItem TheItemm={item} upload={true} UpButtonSpan={'העלה נכס'} popUpSuccessSpan={'הנכס עלה בהצחלה!!'} />
                 </div>
-                {/* <List style={{ textAlign: 'right', display: 'flex', flexDirection: 'column' }}>
-                        {Object.keys(item).map((key, i) => {
 
-                            if (key === 'images') {
-                                return <div key={i}> <input type='file' onChange={handleChange} />
-                                    <br />
-                                    {imageAsFile !== '' && <button onClick={handleUpload}>העלה תמונה</button>}
-                                    <br />
-                                    <span>{imgPercent}%</span>
-                                </div>
-                            } else {
-                                if (item[key] === false || item[key] === true) {
-                                    return <div key={i}>
-                                        <text>{key}</text>
-                                        <input type='checkbox' style={{ fontSize: '20px', margin: '1rem' }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
-
-                                    </div>
-                                }
-                                if (key == 'favorite') {
-                                    return <div key={i}>
-                                        <span>מקומות מרכזיים</span>
-                                        <br />
-                                        <button onClick={addToFavorites}>+</button><input placeholder={key} style={{ fontSize: '20px', margin: '1rem' }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
-                                        <br />
-                                        {item.favorites.map((fav, i) => {
-                                            return <div> <button onClick={() => removeFromFavorites(i)}>-</button><span key={i}>{fav}</span>
-                                                <br />
-                                            </div>
-                                        })}
-                                    </div>
-                                }
-                                if (key === 'freeContext') {
-
-                                    return <div key={i}>
-                                        <textarea placeholder='טקסט חופשי' onKeyPress={handleItemChange} style={{ fontSize: '20px', margin: '1rem' }} name={key} key={i} value={item[key]} onChange={handleItemChange} cols="40" rows="5" />
-
-                                    </div>
-                                }
-                                if (typeof (key) === 'string' && key !== 'itemId' && key !== 'favorites') {
-                                    return <div key={i} >
-                                        <input placeholder={key} style={{ fontSize: '20px', margin: '1rem' }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
-
-                                    </div>
-                                }
-                            }
-
-
-                        })}
-                    </List>
-                    <Dialog
-                        style={{ textAlign: 'center' }}
-                        open={pop}
-                        onClose={() => setPop(false)}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                    >
-                        <DialogTitle id="alert-dialog-title">ישנה בעיה</DialogTitle>
-                        <DialogContent>
-                            <span>אחד או יותר מהפריטים לא מלא אנא מלא את כל הפריטים</span>
-                        </DialogContent>
-                        <DialogActions>
-
-                            <Button onClick={() => setPop(false)} color="primary" autoFocus>
-                                close
-                              </Button>
-                        </DialogActions>
-                    </Dialog>
-                    <Dialog
-                        style={{ textAlign: 'center' }}
-                        open={successPopUp}
-                        onClose={() => setSuccessPopUp(false)}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                    >
-                        <DialogTitle id="alert-dialog-title">מעולה</DialogTitle>
-                        <DialogContent>
-                            <span>הנכס עלה בהצחלה!!</span>
-                        </DialogContent>
-                        <DialogActions>
-
-                            <Button onClick={() => setSuccessPopUp(false)} color="primary" autoFocus>
-                                close
-                              </Button>
-                        </DialogActions>
-                    </Dialog>
-                </div>
-
-
-                {item.images !== [] && <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    {item.images.map((image, i) => {
-
-                        return <div key={i} style={{ display: 'flex', width: 'auto', height: '15rem', flexDirection: 'column', margin: '1rem', justifyContent: 'space-evenly' }}>
-                            <img height='90%' width='auto' src={image.url} alt="image tag" />
-                            <IconButton onClick={() => deletePicture(image)}><Icon><HighlightOffIcon /></Icon></IconButton>
-                        </div>
-                    })}
-                </div>
-                }
-                <button onClick={() => test()}>לחץ לפרטים</button>
-                <button style={{ fontSize: '16' }} onClick={uploadTheItem}>העלה את הפריט</button> */}
             </div>
         </div >
     )

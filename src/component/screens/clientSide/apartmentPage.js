@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import { useLocation, useParams } from 'react-router-dom';
 import Carousel from "react-elastic-carousel";
 import { Card, Grid, Button, IconButton } from '@material-ui/core';
@@ -57,7 +56,6 @@ const ApartmentPage = () => {
         console.log(x[0])
         window.scrollTo(0, 0)
         console.log(location.state)
-        // setTimeout(() => console.log(apartment), 2000)
     }, [useItems()])
 
     const handleSwitching = e => {
@@ -202,13 +200,13 @@ const ApartmentPage = () => {
                         <span style={{ whiteSpace: 'pre-wrap' }}>{item.freeContext}</span>
 
                         <div style={{ padding: '2rem 0', display: 'flex', flexDirection: 'row', textAlign: 'center', justifyContent: 'center' }}>
-                            <Button href={`https://www.facebook.com/sharer/sharer.php?u=https://merkaz-nadlan.co.il/wp-content/uploads/2018/02/Depositphotos_21515189_l-2015-1024x682.jpg`} style={{ padding: '0 0.5rem', borderRadius: '0', marginLeft: '1rem', backgroundColor: 'blue', color: 'white' }}>
+                            <Button href={`https://www.facebook.com/sharer/sharer.php?u=rind-nadlan.com${location.pathname}`} style={{ padding: '0 0.5rem', borderRadius: '0', marginLeft: '1rem', backgroundColor: 'blue', color: 'white' }}>
 
                                 <FacebookIcon fontSize='medium' style={{ marginLeft: '0.5rem', color: 'white' }} />
 
                                 <span style={{ fontSize: '1rem' }}>שתפו עכשיו</span>
                             </Button>
-                            <Button href={`https://api.whatsapp.com/send?text=http://localhost:3000${location.pathname}`} target="_blank" style={{
+                            <Button href={`https://api.whatsapp.com/send?text=http://rint-nadlan.com${location.pathname}`} target="_blank" style={{
                                 padding: '0 0.5rem', borderRadius: '0', backgroundColor: 'green', color: 'white'
                             }} >
                                 <IconButton style={{ padding: 0 }}
