@@ -35,7 +35,8 @@ const Login = () => {
                 history.push('/login/home')
             })
             .catch((error) => {
-                alert('שם משתמש או סיסמא לא נכונים')
+
+                alert(error + 'שם משתמש או סיסמא לא נכונים')
                 var errorCode = error.code;
                 var errorMessage = error.message;
             });
@@ -52,7 +53,7 @@ const Login = () => {
 
             <input style={{ padding: '1rem', margin: '1rem' }} placeholder="סיסמא" type="password" name='password' onChange={handleChange} />
 
-            <Button style={{ padding: '1rem', margin: '1rem' }} onClick={handleLogin}><text>היכנס</text></Button>
+            <Button style={{ padding: '1rem', margin: '1rem' }} onClick={handleLogin}><span>היכנס</span></Button>
 
 
         </div>

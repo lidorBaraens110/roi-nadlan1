@@ -10,27 +10,47 @@ import GroupCom from '../../groupCom';
 import PersonalAttention from '../../../assets/personalAttention.png';
 import Professional from '../../../assets/professional.png';
 import Escort from '../../../assets/hand.png';
-
 import RecommendedSwipe from '../../recommendedSwipe';
-
 import FooterSticky from '../../footerSticky';
+import { initial } from '../../actions';
 import { useItems } from '../../../context/itemContext';
-
-require('dotenv').config();
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { useFirebase } from 'react-redux-firebase';
+import logo from '../../../assets/loggo.png';
 
 const Home = () => {
+
+    useFirebaseConnect([
+        'items',
+        'messages',
+        'recommended'
+        // { path: '/todos' } // object notation
+    ])
+    // const firebase = useFirebase()
+
+    // function addSampleTodo() {
+    //     const sampleTodo = { text: 'Sample', done: false }
+    //     return firebase.push('todos', sampleTodo)
+    // }
+
+
+    const apartment = useSelector((state) => state.firebase.ordered.items)
+    const recommended = useSelector(state => state.firebase.ordered.recommended)
+    const dispatch = useDispatch()
+
     const location = useLocation()
     const history = useHistory()
-    const apartment = useItems().apartment
-    const recommended = useItems().recommended
+    // const apartment = useItems().apartment
+    // const recommended = useItems().recommended
     const [mobileView, setMobileView] = useState()
     const [allApartmentB, setAllApartmentB] = useState(false);
     const [backgroundColor, setBackgroundColor] = useState(false)
 
 
     useEffect(() => {
-
-
+        // dispatch(initial())
+        console.log(recommended)
         const setBackground = () => {
             console.log(window.pageYOffset)
             if (window.pageYOffset > 509) {
@@ -68,10 +88,20 @@ const Home = () => {
         history.push({ state: item, pathname: `/apartmentPage/${item.itemId}` })
     }
 
+    if (!isLoaded(apartment) || !isLoaded(recommended)) {
+        return <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <img src={logo} className='blink-image' />
+
+        </div>
+    }
+
+    // if (isEmpty(apartment)&&!i) {
+    //     return <div>Todos List Is Empty</div>
+    // }
     return (
 
         <div style={{
-            textAlign: 'center', backgroundColor: '#f2f2f2'
+            textAlign: 'center', backgroundColor: '#eaeaea'
         }} >
 
             <Header stat={mobileView ? true : false} backgroundColor={mobileView ? true : backgroundColor} />
@@ -86,6 +116,7 @@ const Home = () => {
                 }
             </div>
             <div >
+                {/* <button onClick={() => console.log(recommended)}>chceck</button> */}
                 <SwipeImages items={apartment} onClick={navigateToApartment} />
                 <Button onClick={navigateToApartments}
                     variant='contained'
@@ -109,7 +140,7 @@ const Home = () => {
                         <img src={Professional} height='80rem' />
                         <h4 style={{ padding: '0.5rem 0' }}>שירות מקצועי</h4>
                         <span style={{ paddingTop: '1rem', lineHeight: 1.5, fontSize: '1rem' }}>
-                            אצלנו מחויבים כלפיכם בשירות ומקצועיות ברמה הגבוהה ביותר בתחומנו ונעמוד מאחורי המילים האלו .
+                            אצלנו מחויביים כלפיכם בשירות ומקצועיות ברמה הגבוהה ביותר בתחומנו, ואנו נעמוד מאחורי המילים האלו .
                             כשאתם מבצעים עסקת הרת גורל , טוב לדעת שיש על מי לסמוך .
                  </span>
                     </Grid>
@@ -129,7 +160,7 @@ const Home = () => {
                 <GroupCom />
             </div>
             <Footer />
-            <FooterSticky />
+            {/* <FooterSticky /> */}
 
         </div >
 

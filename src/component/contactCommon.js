@@ -88,15 +88,17 @@ const ContactCommon = ({ messageType, freeContent, itemName, title }) => {
     };
 
     return (
-        <div style={{ textAlign: 'center', backgroundColor: '#F3F3F1' }}>
+        <div style={{ textAlign: 'center', backgroundColor: '#eaeaea' }}>
             <div style={{ padding: '0 10% ' }}>
                 <form
                     className="user-details"
                     onSubmit={onSubmit}
                     noValidate
+                    style={{ padding: '1rem' }}
                 >
-                    <span className='apartment-page-title' style={{ padding: '1rem', fontWeight: '700' }}>{title}</span>
-                    <fieldset>
+                    <span className='apartment-page-title' style={{ fontWeight: '700' }}>{title}</span>
+
+                    <fieldset style={{ padding: '1rem 0' }}>
                         <input required style={{ width: '90%', padding: '0.5rem', margin: '0.5rem 0' }} name='fullName'
                             onChange={handleUserDetail} value={userDetails.fullName} placeholder='שם מלא' />
                         <br />

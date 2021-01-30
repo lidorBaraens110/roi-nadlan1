@@ -9,10 +9,10 @@ const ApartmentRent = () => {
         <div style={{ textAlign: 'center' }}>
             <Header />
             <div style={{ padding: '10rem' }}>
-                כרגע אין דירות להשכרה
+                בקרוב דירות יהיו דירות חדשות ומפתות
            </div>
             <Footer />
-            <FooterSticky />
+            {/* <FooterSticky /> */}
         </div>
     )
 }

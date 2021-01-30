@@ -10,10 +10,19 @@ import Card from '../../card';
 import RoomIcon from '@material-ui/icons/Room';
 import { useLocation } from 'react-router-dom';
 import "mapbox-gl/dist/mapbox-gl.css";
+import { useFirebase } from 'react-redux-firebase';
+import { useFirebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { useDispatch, useSelector } from 'react-redux';
+import logo from '../../../assets/loggo.png';
 
 
 const ApartmentSell = () => {
-    const apartment = useItems().apartment
+
+    useFirebaseConnect([
+        `items`
+        // { path: '/todos' } // object notation
+    ])
+    const apartment = useSelector(state => state.firebase.ordered.items)
     const location = useLocation();
     const history = useHistory();
     const [viewport, setViewport] = useState({
@@ -34,6 +43,16 @@ const ApartmentSell = () => {
         history.push({ state: item, pathname: `/apartmentPage/${item.itemId}` })
     }
 
+    if (!isLoaded(apartment)) {
+        return <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <img src={logo} className='blink-image' />
+
+        </div>
+    }
+    // else {
+    //     return <button onClick={() => console.log(apartment)}>checkbox</button>
+    // }
+
     return (
         <div style={{ textAlign: 'center', backgroundColor: '#F3F3F1' }}>
 
@@ -49,20 +68,20 @@ const ApartmentSell = () => {
                     mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                 >
                     {apartment.map(apartment => {
-                        if (apartment.lat && apartment.lon) {
+                        if (apartment.value.lat && apartment.value.lon) {
                             return <Marker
-                                key={apartment.itemId}
+                                key={apartment.value.itemId}
 
 
-                                latitude={Number(apartment.lat)}
-                                longitude={Number(apartment.lon)}
+                                latitude={Number(apartment.value.lat)}
+                                longitude={Number(apartment.value.lon)}
                             >
                                 <IconButton
 
                                     className="marker-btn"
                                     onClick={e => {
                                         e.preventDefault();
-                                        setSelectedPark(apartment);
+                                        setSelectedPark(apartment.value);
                                     }}
                                 >
                                     <RoomIcon fontSize='large' style={{ color: 'red' }} />
@@ -105,7 +124,7 @@ const ApartmentSell = () => {
                         return <Grid item key={i}
                             style={{ padding: '1rem 1rem 0', display: 'flex', justifyContent: 'center', textAlign: 'center' }}
                             xs={12} sm={12} md={6} lg={6} xl={6}>
-                            <Card item={item}
+                            <Card item={item.value}
                                 cardName='apartment-card'
                                 imgClass='image-sell-apartment'
                                 onClick={x}
@@ -116,7 +135,7 @@ const ApartmentSell = () => {
                 </Grid>
             </div>
             <Footer />
-            <FooterSticky />
+            {/* <FooterSticky /> */}
 
         </div>
     )

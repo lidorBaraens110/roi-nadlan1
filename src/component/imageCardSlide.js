@@ -3,8 +3,6 @@ import SwipeableViews from 'react-swipeable-views';
 import { makeStyles } from '@material-ui/core';
 import Carousel from "react-elastic-carousel";
 import { Slider } from '@material-ui/core';
-
-
 import Card from './card';
 
 const styles = {
@@ -53,7 +51,7 @@ const ImageCardSlide = ({ items, onClick }) => {
                 <Carousel className={classes.root} itemPadding={[20, 20, 20, 20]} showArrows={mobileView ? false : true} enableMouseSwipe={mobileView ? true : true} enableSwipe breakPoints={breakPoints} >
                     {
                         items.map((item, i) => {
-                            return <Card key={i} item={item}
+                            return <Card key={i} item={item.value}
                                 imgClass='slide-image'
                                 cardName='home-card-apartment'
                                 onClick={onClick}

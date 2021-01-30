@@ -10,11 +10,20 @@ import ReportImg from '../../../assets/x.jpg';
 import ReportImgPhone from '../../../assets/article-phone.jpg';
 import RowImgPhone from '../../../assets/article-wide-phone.jpg';
 import RowArtBeta from '../../../assets/z.jpg';
+import { useSelector } from 'react-redux';
+import { useFirebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import logo from '../../../assets/loggo.png';
 
 const OurStory = () => {
+
+    useFirebaseConnect([
+        `recommended`
+        // { path: '/todos' } // object notation
+    ])
+    const recommended = useSelector(state => state.firebase.ordered.recommended)
     const location = useLocation()
     const [load, setLoad] = useState(false);
-    const recommended = useItems().recommended;
+    // const recommended = useItems().recommended;
     const [mobileView, setMobileView] = useState(false)
 
     useEffect(() => {
@@ -34,6 +43,13 @@ const OurStory = () => {
         console.log(recommended)
         setLoad(true)
     }, [recommended])
+
+    if (!isLoaded(recommended)) {
+        return <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <img src={logo} className='blink-image' />
+
+        </div>
+    }
     return (
         <div style={{ textAlign: 'center', backgroundColor: 'rgb(243, 243, 241)' }}>
             <Header stat={true} backgroundColor={true} />
@@ -66,7 +82,7 @@ const OurStory = () => {
             </div>}
 
             <Footer />
-            <FooterSticky />
+            {/* <FooterSticky /> */}
         </div>
     )
 }

@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Header from '../../headerLogin';
+import Header from './com/headerAdmin';
 import { useItems } from '../../../context/itemContext';
 import firebase from '../../../firebase';
 

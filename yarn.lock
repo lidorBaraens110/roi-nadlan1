@@ -4669,6 +4669,11 @@ css.escape@^1.5.1:
   resolved "https://registry.yarnpkg.com/css.escape/-/css.escape-1.5.1.tgz#42e27d4fa04ae32f931a4b4d4191fa9cddee97cb"
   integrity sha1-QuJ9T6BK4y+TGktNQZH6nN3ul8s=
 
+css3transform@^1.1.9:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/css3transform/-/css3transform-1.2.3.tgz#dbb6c7f706224bbf29239ca6625877c4bf75b68d"
+  integrity sha512-6VmJ0s6X+mUuYh0xAxqhSi0i3vt52gAu3lL1mBoXLYPGfPHOm2pjYNRDYD6pdrBrszU/4njk5a9t6K2JjwX1Yg==
+
 css@^2.0.0:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/css/-/css-2.2.4.tgz#c646755c73971f2bba6a601e2cf2fd71b1298929"
@@ -8358,6 +8363,11 @@ lodash.templatesettings@^4.0.0:
   dependencies:
     lodash._reinterpolate "^3.0.0"
 
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
+
 lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
@@ -10677,6 +10687,11 @@ react-event-listener@^0.6.0:
     prop-types "^15.6.0"
     warning "^4.0.1"
 
+react-fullscreen-image@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/react-fullscreen-image/-/react-fullscreen-image-0.0.3.tgz#c3986e1da0453616afa4d7ba50456b68fd6539c5"
+  integrity sha512-A4zXvDox4WConU/qUpOKUCoRmV2mGi2DPTXNhG9I1x+W8WWwpKQMmrbWjLAe/UudhtpJRlebkIC3sPU6IHR3Nw==
+
 react-google-maps@^9.4.5:
   version "9.4.5"
   resolved "https://registry.yarnpkg.com/react-google-maps/-/react-google-maps-9.4.5.tgz#920c199bdc925e0ce93880edffb09428d263aafa"
@@ -10698,6 +10713,15 @@ react-image-slider@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-image-slider/-/react-image-slider-0.1.0.tgz#2e17ec6c3b6b3e35089aa26884228ac61940bdec"
   integrity sha1-LhfsbDtrPjUImqJohCKKxhlAvew=
+
+react-imageslides@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-imageslides/-/react-imageslides-2.1.1.tgz#0c90c7494bd61593ca620af0626fb70595e43219"
+  integrity sha512-sukbI2a6gQp9sLCESNJu7FH43CUj91gskS14c8UTUGmMlTTZhlGfoRAwnBvkZfEwtvqahZ3W6ATAcFw55QwhPA==
+  dependencies:
+    classnames "^2.2.6"
+    css3transform "^1.1.9"
+    lodash.throttle "^4.1.1"
 
 react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"

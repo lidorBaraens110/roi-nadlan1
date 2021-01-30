@@ -31,8 +31,8 @@ const RecommendedSwipe = ({ recommended }) => {
                 {recommended.map((rec, i) => {
                     return <div key={i} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                         <card className='recommended-card-home' >
-                            <h5>{rec.name}</h5>
-                            <span style={{ whiteSpace: 'pre-line' }}>{rec.content}</span>
+                            <h5>{rec.value.name}</h5>
+                            <span style={{ whiteSpace: 'pre-line' }}>{rec.value.content}</span>
                         </card>
                         <Dialog
                             style={{ textAlign: 'center' }}
@@ -43,7 +43,7 @@ const RecommendedSwipe = ({ recommended }) => {
                         >
                             <DialogTitle id="alert-dialog-title">ההמלצה המקורית</DialogTitle>
                             <DialogContent>
-                                <img src={recommended[index].image.url} alt='pictures' className='image-recommended' />
+                                <img src={recommended[index].value.image.url} alt='pictures' className='image-recommended' />
                             </DialogContent>
                             <DialogActions>
 

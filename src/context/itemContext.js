@@ -17,12 +17,20 @@ export const ItemProvider = ({ children }) => {
     })
 
     useEffect(() => {
+        loadExample();
         loadItems();
         loadRecommended();
         loadGeneralMessages();
         loadNameMessages();
     }, [])
 
+    const loadExample = () => {
+        let loadRef = firebase.database().ref()
+        loadRef.orderByChild('posted').once('value').then(snapshot => {
+            let data = snapshot.val();
+            console.log(data)
+        })
+    }
     const loadItems = () => {
         let loadRef = firebase.database().ref('items');
         loadRef.orderByChild('posted').once('value').then(snapshot => {

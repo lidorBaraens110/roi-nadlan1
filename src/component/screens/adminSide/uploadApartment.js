@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import firebase, { storage } from '../../../firebase';
 import { Icon, IconButton, List, DialogActions, Button, ListItem, Dialog, DialogContent, DialogTitle } from '@material-ui/core';
-import HeaderLogin from '../../../component/headerLogin';
+import HeaderLogin from './com/headerAdmin';
 import HandleItem from './com/handleItem';
+import { useParams } from 'react-router-dom';
 
 const initialItem = {
     name: '',
@@ -25,7 +26,9 @@ const initialItem = {
     lon: '',
     images: []
 }
-const UploadImage = () => {
+const UploadSell = () => {
+
+    const { id } = useParams()
     const [imgPercent, setImgPercent] = useState();
     const [pop, setPop] = useState(false)
     const [successPopUp, setSuccessPopUp] = useState(false)
@@ -198,7 +201,7 @@ const UploadImage = () => {
                 <div >
                     <h1>העלאת נכס</h1>
                     <br />
-                    <HandleItem TheItemm={item} upload={true} UpButtonSpan={'העלה נכס'} popUpSuccessSpan={'הנכס עלה בהצחלה!!'} />
+                    <HandleItem TheItemm={item} upload={true} UpButtonSpan={'העלה נכס'} type={id} popUpSuccessSpan={'הנכס עלה בהצחלה!!'} />
                 </div>
 
             </div>
@@ -207,4 +210,4 @@ const UploadImage = () => {
 }
 
 
-export default UploadImage;
+export default UploadSell;
