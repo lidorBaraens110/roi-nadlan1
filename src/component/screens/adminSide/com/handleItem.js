@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import firebase, { storage } from '../../../../firebase';
 import { makeStyles } from '@material-ui/core/styles';
-import { Icon, IconButton, List, DialogActions, TextField, Input, Button, Dialog, DialogContent, DialogTitle, Grid } from '@material-ui/core';
+import { IconButton, List, DialogActions, TextField, Input, Button, Dialog, DialogContent, DialogTitle, Grid } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useFirebase } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import Dropzone from 'react-dropzone';
-import { map } from 'lodash';
+
 // import UploadImage from '../com/uploadImage';
 
 
@@ -262,47 +262,67 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
                 tableLayout: 'fixed', /*Optional*/
                 borderSpacing: '10px' /*Optional*/
             }}>
-                {Object.keys(item).map((key, i) => {
+                <div>
+                    <TextField dir='rtl' id="standard-basic" label={'שם'} variant='outlined'
+                        style={{ fontSize: '20px', display: 'inline-block', direction: 'rtl' }} value={item.name} name='name' onChange={handleItemChange} />
+                    <TextField dir='rtl' id="standard-basic" label={'עיר'} variant='outlined'
+                        style={{ fontSize: '20px', display: 'inline-block', direction: 'rtl' }} value={item.city} name='city' onChange={handleItemChange} />
+                    <TextField dir='rtl' id="standard-basic" label={'רחוב'} variant='outlined'
+                        style={{ fontSize: '20px', display: 'inline-block', direction: 'rtl' }} value={item.address} name='address' onChange={handleItemChange} />
+                    <TextField dir='rtl' id="standard-basic" label={'גודל'} variant='outlined'
+                        style={{ fontSize: '20px', display: 'inline-block', direction: 'rtl' }} value={item.size} name='size' onChange={handleItemChange} />
+                    <TextField dir='rtl' id="standard-basic" label={'חדרים'} variant='outlined'
+                        style={{ fontSize: '20px', display: 'inline-block', direction: 'rtl' }} value={item.rooms} name='rooms' onChange={handleItemChange} />
+                    <TextField dir='rtl' id="standard-basic" label={'קומה'} variant='outlined'
+                        style={{ fontSize: '20px', display: 'inline-block', direction: 'rtl' }} value={item.floor} name='floor' onChange={handleItemChange} />
+                    <TextField dir='rtl' id="standard-basic" label={'תאריך כניסה'} variant='outlined'
+                        style={{ fontSize: '20px', display: 'inline-block', direction: 'rtl' }} value={item.enterDate} name='enterDate' onChange={handleItemChange} />
+                    <TextField dir='rtl' id="standard-basic" label={'מחיר'} variant='outlined'
+                        style={{ fontSize: '20px', display: 'inline-block', direction: 'rtl' }} value={item.price} name='price' onChange={handleItemChange} />
 
-                    if (key === 'images') {
-                        return <div key={i}>
-                            <span>{imgPercent}%</span>
+                    <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '60%' }}>
+                        <div>
+                            <span>מרפסת</span>
+                            <br />
+                            <input type='checkbox' style={{ fontSize: '20px', margin: '1rem' }} value={item.balcony} name='balcony' onChange={handleItemChange} checked={item.balcony} />
                         </div>
-                    } else {
-                        if (item[key] === false || item[key] === true) {
-                            return <div key={i} >
+                        <div>
+                            <span>חניה</span>
+                            <br />
+                            <input type='checkbox' style={{ fontSize: '20px', margin: '1rem' }} value={item.parking} name='parking' onChange={handleItemChange} checked={item.parking} />
+                        </div>
 
-                                <input type='checkbox' style={{ fontSize: '20px', margin: '1rem' }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
-                                <span>{key}</span>
-                            </div>
-                        }
-                        if (key == 'favorite') {
-                            return <div key={i}>
-                                <span>מקומות מרכזיים</span>
-                                <br />
-                                <button onClick={addToFavorites}>+</button><input placeholder={key} style={{ fontSize: '20px', margin: '1rem' }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
-                                <br />
-                                {item.favorites.map((fav, i) => {
-                                    return <div key={i}> <button onClick={() => removeFromFavorites(i)}>-</button><span key={i}>{fav}</span>
-                                        <br />
-                                    </div>
-                                })}
-                            </div>
-                        }
-                        if (key === 'freeContext') {
+                        <div>
+                            <span>מעלית</span>
+                            <br />
+                            <input type='checkbox' style={{ fontSize: '20px', margin: '1rem' }} value={item.elevator} name='elevator' onChange={handleItemChange} checked={item.elevator} />
+                        </div>
+                        <div style={{ textAlign: 'center', border: '1px dashed red', padding: '0 1rem' }}>
+                            <span>סימון וי אומר שהנכס נמכר/הושכר</span>
+                            <br />
+                            <span>נמכר?</span>
 
-                            return <textarea key={i} placeholder='טקסט חופשי' onKeyPress={handleItemChange}
-                                style={{ fontSize: '20px', margin: '1rem' }} name={key} key={i} value={item[key]} onChange={handleItemChange} cols="40" rows="5" />
-                        }
-                        if (typeof (key) === 'string' && key !== 'itemId' && key !== 'favorites') {
-                            return <TextField dir='rtl' id="standard-basic" label={key} variant='outlined'
-                                style={{
-                                    fontSize: '20px', display: 'inline-block', direction: 'rtl'
-                                    /*Optional*/
-                                }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
-                        }
-                    }
-                })}
+                            <input type='checkbox' style={{ fontSize: '20px', margin: '1rem' }} value={item.sell} name='sell' onChange={handleItemChange} checked={item.sell} />
+                        </div>
+                    </div>
+                    <span>תיאור הנכס</span>
+                    <br />
+                    <textarea placeholder='טקסט חופשי' onKeyPress={handleItemChange}
+                        style={{ fontSize: '20px' }} name='freeContext' value={item.freeContext} onChange={handleItemChange} cols="100" rows="8" />
+
+                    <div>
+                        <span>מקומות מרכזיים</span>
+                        <br />
+                        <button onClick={addToFavorites}>+</button><input placeholder='מקומות מרכזיים' style={{ fontSize: '20px', margin: '1rem' }} value={item.favorite} name='favorite' onChange={handleItemChange} />
+                        <br />
+                        {item.favorites.map((fav, i) => {
+                            return <div key={i}> <button onClick={() => removeFromFavorites(i)}>-</button><span key={i}>{fav}</span>
+                                <br />
+                            </div>
+                        })}
+                    </div>
+                </div>
+
             </div>
 
             <Dialog
@@ -357,7 +377,6 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
             </Dropzone>
             {
                 item.images && <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    there is images
                     <Grid container spacing={5}>
                         {item.images.map((image, i) => {
                             return <Grid key={i} item xs={12} sm={12} md={4} lg={4} xl={4}>
@@ -383,3 +402,46 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
 
 
 export default HandleItem;
+
+// {Object.keys(item).map((key, i) => {
+
+//     if (key === 'images') {
+//         return <div key={i}>
+//             <span>{imgPercent}%</span>
+//         </div>
+//     } else {
+//         if (item[key] === false || item[key] === true) {
+//             return <div key={i} >
+
+//                 <input type='checkbox' style={{ fontSize: '20px', margin: '1rem' }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
+//                 <span>{key}</span>
+//             </div>
+//         }
+//         if (key == 'favorite') {
+//             return <div key={i}>
+//                 <span>מקומות מרכזיים</span>
+//                 <br />
+//                 <button onClick={addToFavorites}>+</button><input placeholder={key} style={{ fontSize: '20px', margin: '1rem' }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
+//                 <br />
+//                 {item.favorites.map((fav, i) => {
+//                     return <div key={i}> <button onClick={() => removeFromFavorites(i)}>-</button><span key={i}>{fav}</span>
+//                         <br />
+//                     </div>
+//                 })}
+//             </div>
+//         }
+//         if (key === 'freeContext') {
+
+//             return <textarea key={i} placeholder='טקסט חופשי' onKeyPress={handleItemChange}
+//                 style={{ fontSize: '20px', margin: '1rem' }} name={key} key={i} value={item[key]} onChange={handleItemChange} cols="40" rows="5" />
+//         }
+//         if (typeof (key) === 'string' && key !== 'itemId' && key !== 'favorites') {
+//             return <TextField dir='rtl' id="standard-basic" label={key} variant='outlined'
+//                 style={{
+//                     fontSize: '20px', display: 'inline-block', direction: 'rtl'
+//                     /*Optional*/
+//                 }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
+//         }
+//     }
+// })
+// }
