@@ -33,8 +33,10 @@ const ContactUs = () => {
     }
     return (
         <div style={{ textAlign: 'center', backgroundColor: '#eaeaea' }}>
+
             <Header stat={true} backgroundColor={true} />
-            <Grid container style={{ margin: '2rem 0' }}>
+            <h3 style={{ margin: '1rem' }}>צור קשר</h3>
+            <Grid container style={{ margin: '1rem 0 2rem' }}>
                 <Grid item xs={4} sm={4} md={4} lg={4} xl={4} >
                     <a href={`tel:+972${contact.phone}`} style={{ textDecoration: 'none' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -61,7 +63,7 @@ const ContactUs = () => {
                     </a>
                 </Grid>
             </Grid>
-            <div className='contact-content' style={{ margin: '3rem' }}>
+            <div className='contact-content' style={{ margin: '2rem' }}>
                 <span style={{ fontWeight: '500' }}>{contact.sentenceRepresentative}</span>
             </div>
             <ContactCommon freeContent title='ליצירת קשר ולתיאום פגישה' messageType='generalMessages' itemName='' />

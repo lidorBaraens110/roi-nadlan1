@@ -99,42 +99,41 @@ const ContactCommon = ({ messageType, freeContent, itemName, title, type }) => {
     }
 
     return (
-        <div style={{ textAlign: 'center' }}>
-            <div style={{ margin: '0 10%' }}>
-                <form
+        <div style={{ textAlign: 'center', margin: '1rem 0' }}>
 
-                    className="user-details"
-                    onSubmit={onSubmit}
-                    noValidate
-                    style={{ padding: '1rem' }}
-                >
-                    <span className='apartment-page-title' style={{ fontWeight: '700' }}>{title}</span>
+            <form
 
-                    <fieldset style={{ padding: '1rem 0' }}>
-                        <input required style={{ width: '90%', padding: '0.5rem', margin: '0.5rem 0' }} name='fullName'
-                            onChange={handleUserDetail} value={userDetails.fullName} placeholder='שם מלא' />
-                        <br />
-                        <span style={{ color: "red" }}>{errors.fullName}</span>
-                        <input style={{ width: '90%', padding: '0.5rem', margin: '0.5rem 0' }}
-                            name='phone' onChange={handleUserDetail} value={userDetails.phone} placeholder='טלפון' />
-                        <input required style={{ width: '90%', padding: '0.5rem', margin: '0.5rem 0' }}
-                            name='email' type='email' onChange={handleUserDetail} value={userDetails.email} placeholder='מייל' />
-                        <br />
-                        <span style={{ color: "red" }}>{errors.email}</span>
-                        {freeContent && <textarea cols="40" rows="5"
-                            style={{ width: '90%', padding: '0.5rem', margin: '0.5rem 0' }}
-                            name='message' type='email' onChange={handleUserDetail} value={userDetails.message}
-                            placeholder='טקסט חופשי' />
-                        }
-                        {!sent ? <Button type="submit"
-                            style={{ borderRadius: '0', backgroundColor: 'black', color: 'white', padding: '0.5rem 2rem' }}>
-                            <span style={{ fontSize: '1rem' }}>שלח</span></Button>
-                            : <div style={{ padding: '0.5rem 2rem' }}>
-                                <span style={{ color: 'green', fontSize: '1rem', fontWeight: 'bold' }}>נשלח בהצלחה</span></div>}
-                    </fieldset>
-                </form>
+                className="user-details"
+                onSubmit={onSubmit}
+                noValidate
+                style={{ padding: '1rem' }}
+            >
+                <span className='user-details-title' style={{ fontWeight: '700' }}>{title}</span>
 
-            </div>
+                <fieldset style={{ margin: '2rem 0 1rem' }}>
+                    <input required style={{ width: '90%', padding: '0.5rem', margin: '0.5rem 0', border: '1px solid gray', borderRadius: '2px' }} name='fullName'
+                        onChange={handleUserDetail} value={userDetails.fullName} placeholder='שם מלא' />
+                    <br />
+                    <span style={{ color: "red" }}>{errors.fullName}</span>
+                    <input style={{ width: '90%', padding: '0.5rem', margin: '0.5rem 0', border: '1px solid gray', borderRadius: '2px' }}
+                        name='phone' onChange={handleUserDetail} value={userDetails.phone} placeholder='טלפון' />
+                    <input required style={{ width: '90%', padding: '0.5rem', margin: '0.5rem 0', border: '1px solid gray', borderRadius: '2px' }}
+                        name='email' type='email' onChange={handleUserDetail} value={userDetails.email} placeholder='מייל' />
+                    <br />
+                    <span style={{ color: "red" }}>{errors.email}</span>
+                    {freeContent && <textarea cols="50" rows="8"
+                        style={{ width: '90%', padding: '0.5rem', margin: '0.5rem 0', border: '1px solid gray', borderRadius: '2px' }}
+                        name='message' type='email' onChange={handleUserDetail} value={userDetails.message}
+                        placeholder='טקסט חופשי' />
+                    }
+                    {!sent ? <Button type="submit"
+                        style={{ borderRadius: '0', backgroundColor: 'black', color: 'white', padding: '0.5rem 2rem' }}>
+                        <span style={{ fontSize: '1rem' }}>שלח</span></Button>
+                        : <div style={{ padding: '0.5rem 2rem' }}>
+                            <span style={{ color: 'green', fontSize: '1rem', fontWeight: 'bold' }}>נשלח בהצלחה</span></div>}
+                </fieldset>
+            </form>
+
         </div >
     )
 }

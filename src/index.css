@@ -159,9 +159,11 @@ div {
 }
 .user-details {
   border: 2px solid black;
-  margin: 0% 25% 4% 25%;
+  margin: 0% 30% 4% 30%;
   padding-bottom: 1rem;
-  background-color: #cad2fc;
+}
+.user-details-title {
+  font-size: 2rem;
 }
 .contact-icon {
   width: 6rem;
@@ -357,10 +359,14 @@ div {
   }
   /* contact us */
   .user-details {
-    margin: 8% 0;
+    margin: 0;
+  }
+  .user-details-title {
+    font-size: 1.5rem;
   }
   .contact-icon {
     width: 20vw;
+    height: auto;
   }
   .contact-content {
     padding: 0;
