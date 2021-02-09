@@ -116,6 +116,7 @@ const Group = () => {
         <>
             <HeaderLogin />
             <div style={{ padding: '0 5rem 0', textAlign: 'center' }}>
+                <h3 style={{ margin: '1rem' }}>הצוות</h3>
                 <button style={{ margin: '2rem' }} onClick={() => handleUpload('group')}>הוסף איש צוות חדש</button>
                 <button style={{ margin: '2rem' }} onClick={() => handleUpload('collaboration')}>הוסף איש שת"פ</button>
                 {/* <button style={{ margin: '2rem' }} onClick={handleUpload}>הוסף איש צוות חדש</button> */}

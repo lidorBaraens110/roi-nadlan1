@@ -5,10 +5,11 @@ import firebase, { storage } from '../../../../firebase';
 import { useFirebase, } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { uniqueId } from './functions';
 
 
 const initial = {
-    img: { url: '', path: '' },
+    img: { url: '', fullPath: '' },
     htmlURL: ''
 }
 
@@ -18,16 +19,16 @@ const HandleOurArticle = ({ upload, myArticle }) => {
     const history = useHistory();
 
 
-    const s4 = () => {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-    }
+    // const s4 = () => {
+    //     return Math.floor((1 + Math.random()) * 0x10000)
+    //         .toString(16)
+    //         .substring(1);
+    // }
 
-    const uniqueId = () => {
-        return s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + '-' + s4() + '-' + s4();
-    }
+    // const uniqueId = () => {
+    //     return s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' +
+    //         s4() + '-' + s4() + '-' + s4() + '-' + s4();
+    // }
     const [ourArticle, setOurArticle] = useState(myArticle)
 
     const handleChange = (e) => {
@@ -38,20 +39,27 @@ const HandleOurArticle = ({ upload, myArticle }) => {
     }
 
     const handleChangImage = (e) => {
+        let lastPhotoPath = ourArticle.img.fullPath;
         const image = e.target.files[0]
+        const imageId = uniqueId()
         console.log(image)
         theFirebase.uploadFile('images', image, 'ourArticleImage', {
             documentId: (res, x, y, url) => {
                 setOurArticle((preVal) => {
-                    return { ...preVal, img: { url: url, path: res.ref.fullPath } }
+                    return { ...preVal, img: { url: url, fullPath: res.ref.fullPath } }
                 })
-            }
+            }, name: imageId
         }).then(() => {
             console.log('gj')
             setOurArticle(preVal => { return { ...preVal } })
-        }).catch(err => {
-            console.log(err)
-        })
+        }).then(() => {
+            if (!upload) {
+                theFirebase.deleteFile(`${lastPhotoPath}`)
+            }
+        }).catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+            })
 
     }
     const handleUpload = () => {
@@ -63,7 +71,7 @@ const HandleOurArticle = ({ upload, myArticle }) => {
                     return { ...preValue, id: uniqueId() }
                 })
                 if (!upload) {
-                    alert('lfasnasl')
+
                     history.push('/login/ourArticles');
                 }
                 console.log('we did it')

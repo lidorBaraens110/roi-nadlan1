@@ -12,7 +12,7 @@ const initialPerson = {
     name: '',
     role: '',
     des: '',
-    img: '',
+    img: { url: '', fullPath: '' },
 }
 
 const AddToGroup = () => {

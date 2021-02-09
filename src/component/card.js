@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DirectionsCarIcon from '@material-ui/icons/DirectionsCar';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import { Button, Card } from '@material-ui/core';
 import AspectRatioIcon from '@material-ui/icons/AspectRatio';
 
-const TheCard = ({ item, imgClass, onClick, cardName }) => {
+const TheCard = ({ item, imgClass, onClick, cardName, type }) => {
 
+    useEffect(() => {
+        console.log(type)
+    }, [type])
     return (
-        <Card dir='rtl' className={cardName} style={{ borderRadius: 0, marginBottom: '1rem', padding: '0' }}>
+        <Card dir='rtl' className={cardName} style={{ borderRadius: 0, padding: '0' }}>
             {item.images != null &&
                 <div style={{ position: 'relative' }}>
-                    <img className={imgClass} onClick={() => onClick(item)}
+                    <img className={imgClass} onClick={() => onClick(item, type)}
                         src={item.images[0] ? item.images[0].url : item.images[1].url}
                     />
                     {item.sell !== undefined && <div style={{
@@ -28,13 +31,13 @@ const TheCard = ({ item, imgClass, onClick, cardName }) => {
                 </div>
             }
 
-            <div style={{ textAlign: 'right', padding: '1rem' }}>
-                <div className='crop'>
+            <div style={{ textAlign: 'right', padding: '0.5rem' }}>
+                {/* <div className='crop'>
                     <span style={{ fontSize: '0.8rem', fontWeight: '500', color: '#3ca2c3' }}>
                         {item.name}
                     </span>
-                </div>
-                <div style={{ padding: '0.5rem 0', fontSize: '0.7rem' }}>
+                </div> */}
+                <div style={{ fontSize: '0.8rem', fontWeight: '500', color: '#3ca2c3' }}>
                     <span >{item.address}, {item.city}</span>
                 </div>
                 <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'row' }}>
@@ -55,7 +58,7 @@ const TheCard = ({ item, imgClass, onClick, cardName }) => {
                         <span style={{ paddingRight: '0.2rem', fontSize: '0.8rem' }}>{item.size} מ"ר</span>
                     </div>
                     <div style={{ flex: 2, textAlign: 'left' }}>
-                        <Button style={{ backgroundColor: '#3ca2c3', color: 'white', fontSize: '0.7rem' }} onClick={() => onClick(item)}>{'לפרטים>'}</Button></div>
+                        <Button style={{ backgroundColor: '#3ca2c3', color: 'white', fontSize: '0.7rem' }} onClick={() => onClick(item, type)}>{'לפרטים>'}</Button></div>
 
                 </div>
 

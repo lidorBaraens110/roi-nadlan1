@@ -19,7 +19,7 @@ function UploadFeatures() {
     const [feature, setFeature] = useState({
         title: '',
         des: '',
-        icon: '',
+        icon: { url: '', fullPath: '' },
         id: uniqueId()
     })
 

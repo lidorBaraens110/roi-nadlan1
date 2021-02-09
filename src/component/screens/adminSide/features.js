@@ -1,29 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useFirebaseConnect, isEmpty, isLoaded } from 'react-redux-firebase';
+import { useFirebaseConnect, isEmpty, isLoaded, useFirebase } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
-import { Grid, Card } from '@material-ui/core';
+import { Grid, Card, TextField } from '@material-ui/core';
 import Header from './com/headerAdmin';
+import firebase from '../../../firebase';
 
 
 const Features = () => {
 
+    const theFirebase = useFirebase();
     const history = useHistory();
 
     useFirebaseConnect([
-        'features'
+        'features/features',
+        'features/title'
     ])
 
-    const features = useSelector(state => state.firebase.ordered.features)
+    const features = useSelector(state => state.firebase.ordered.features && state.firebase.ordered.features['features'])
+    const title = useSelector(state => state.firebase.data.features && state.firebase.data.features['title'])
 
+    const [theTitle, setTheTitle] = useState('');
+    const [edit, setEdit] = useState(false);
+    const changeTitle = (e) => {
+        console.log(e.target.value)
+        setTheTitle(e.target.value)
+    }
     const handleUpload = () => {
         history.push('/login/uploadFeature')
+    }
+
+    useEffect(() => {
+        if (isLoaded(title) && !isEmpty(title)) {
+            setTheTitle(title)
+        }
+    }, [title])
+    const handleDelete = (feature) => {
+        firebase.database().ref(`/features/${feature.key}`).remove().then(() => {
+            theFirebase.deleteFile(`${feature.value.icon.fullPath}`).then(() => {
+                console.log('remove image')
+            }).then(() => window.location.reload(false)).catch(err => console.log(err))
+        }).catch((err) => console.log('data base', err))
     }
     const handleEdit = (feat) => {
         const id = feat.key
         history.push('/login/editFeature/' + id)
     }
-
+    const handleUploadTitle = () => {
+        // console.log(theTitle)
+        theFirebase.database().ref('/features/title').set(theTitle)
+            .then(() => {
+                console.log('update')
+                setEdit(false)
+            })
+            .catch(err => console.log(err))
+    }
     if (!isLoaded(features)) {
         return <div>loading...</div>
     }
@@ -32,14 +63,19 @@ const Features = () => {
         <div>
             <Header />
             <div style={{ textAlign: 'center' }}>
-                <h3>תכונות</h3>
+                <h3 style={{ margin: '1rem' }}>תכונות</h3>
                 <span>מופיעה בדף הבית מתחת לדירות</span>
                 <br />
 
-                {isEmpty(features) || features.length <= 2 &&
+                {(isEmpty(features) || features.length <= 2) &&
                     <button style={{ marginTop: '1rem' }} onClick={handleUpload}>העלה תכונה</button>
                 }
                 <hr />
+                <TextField disabled={edit ? false : true} label='כותרת של התכונות' name='title' value={theTitle} onChange={changeTitle} variant='outlined' />
+                <br />
+                {edit ? <button onClick={handleUploadTitle}>עדכן כותרת</button>
+                    : <button onClick={() => setEdit(true)}>ערוך</button>}
+                <br />
                 {isEmpty(features) ?
                     <div>
                         אין כרגע תכונות
@@ -56,6 +92,8 @@ const Features = () => {
                                     </span>
                                     <br />
                                     <button onClick={() => handleEdit(feature)}>ערוך</button>
+                                    <button onClick={() => handleDelete(feature)}>מחק</button>
+                                    <button onClick={() => console.log(feature)}> בדוק</button>
                                 </Grid>
                             } else {
                                 console.log(feature)

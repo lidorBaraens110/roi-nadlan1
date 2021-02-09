@@ -1,38 +1,30 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Grid, Button, Typography, TextField } from '@material-ui/core';
-import { useFirebase, useFirebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
-import { useSelector } from 'react-redux';
-import HeaderLogin from './headerAdmin';
-import DefaultPage from '../../../defaultPage';
+import { TextField } from '@material-ui/core';
+import { useFirebase } from 'react-redux-firebase';
 import firebase from '../../../../firebase';
+import { uniqueId } from './functions';
 
 const initialPerson = {
     name: '',
     role: '',
     des: '',
-    img: '',
+    img: { fullPath: '', url: '' },
 }
 const HandleGroup = ({ upload, thePerson, type }) => {
 
     const history = useHistory();
 
-    const s4 = () => {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-    }
-    const uniqueId = () => {
-        return s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + '-' + s4() + '-' + s4();
-    }
+
     const theFirebase = useFirebase();
 
     const [person, setPerson] = useState(thePerson)
 
     const addImage = (e) => {
-        const { fullPath } = person.img;
+        let lastPhotoPath = person.img.fullPath
         const file = e.target.files[0]
+
+        let imageId = uniqueId();
 
         theFirebase.uploadFile('images', file, 'groupImg', {
             documentId: (res, x, y, url) => {
@@ -43,20 +35,17 @@ const HandleGroup = ({ upload, thePerson, type }) => {
                     return { ...preVal, img: { fullPath: res.ref.fullPath, url: url } }
                 })
                 console.log(url)
-            }
+            }, name: imageId
         }).then(res => {
             setPerson(preVal => { return { ...preVal } })
             console.log('then', res)
+
         }).then(() => {
-            // if (!upload) {
-            //     handleUpload()
-            // }
-        }).then(() => {
-            // theFirebase.deleteFile(fullPath).then(() => {
-            //     console.log('delete the previous image')
-            // }).catch((err) => console.log(err))
-            // })
-        }).catch((err) => console.log(err))
+            if (!upload) {
+                theFirebase.deleteFile(`${lastPhotoPath}`)
+            }
+        }).catch(err => console.log(err))
+            .catch((err) => console.log(err))
 
     }
 
@@ -65,9 +54,6 @@ const HandleGroup = ({ upload, thePerson, type }) => {
         setPerson(pre => {
             return { ...pre, [name]: value }
         })
-    }
-    const handleEdit = () => {
-        console.log('edit')
     }
 
     const handleUpload = () => {
@@ -79,7 +65,7 @@ const HandleGroup = ({ upload, thePerson, type }) => {
                     return { ...preValue, id: uniqueId() }
                 })
                 setTimeout(() => {
-                    if (!upload) {
+                    if (!upload || type == 'manager') {
                         history.push('/login/group')
                     }
                 }, 0)

@@ -33,7 +33,8 @@ const Articles = () => {
     }
     const handleDelete = (art) => {
         console.log('handleDelete')
-        theFirebase.database().ref().remove()
+        console.log(art)
+        theFirebase.database().ref(`/articles/${art}`).remove()
             .then(() => {
                 console.log('remove article')
             })
@@ -48,24 +49,25 @@ const Articles = () => {
     return (
         <div style={{ textAlign: 'center' }}>
             <Header />
-            <h3>המאמרים</h3>
+            <h3 style={{ margin: '1rem' }}>המאמרים</h3>
             <button onClick={handleUpload}>העלה מאמר</button>
             <hr />
             {isEmpty(articles) ?
                 <div>כרגע לא קיימים מאמרים</div>
                 :
                 <Grid container spacing={2} style={{ width: '100%', margin: '0', padding: '2rem' }}>
-                    {articles.map(article => {
+                    {console.log(articles), articles.map(article => {
                         if (article.value) {
+
                             return <Grid key={article.value.id} item xs={12} sm={6} md={4} lg={4} xl={4}>
                                 <Card style={{ borderRadius: '0' }}>
-                                    <img src={article.value.img.url} style={{ height: 'auto', width: '100%' }} />
+                                    <img src={article.value.mainImg.url} style={{ height: 'auto', width: '100%' }} />
                                     <h5>{article.value.title}</h5>
-                                    <span>{article.value.des}</span>
+                                    <span>{article.value.subTitle}</span>
                                 </Card>
                                 <br />
                                 <button onClick={() => handleEdit(article.key)}>ערוך</button>
-                                <button onClick={() => handleDelete(article)}>מחק</button>
+                                <button onClick={() => handleDelete(article.key)}>מחק</button>
                             </Grid>
                         }
                     })}

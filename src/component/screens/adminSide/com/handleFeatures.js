@@ -3,12 +3,13 @@ import React, { useState } from 'react';
 import { List, ListItem, TextField } from '@material-ui/core';
 import { useFirebase } from 'react-redux-firebase';
 import { useHistory } from 'react-router-dom';
+import { uniqueId } from './functions';
 
 
 const initial = {
     title: '',
     des: '',
-    icon: { url: '', path: '' }
+    icon: { url: '', fullPath: '' }
 }
 const HandleFeatures = ({ upload, theFeature }) => {
 
@@ -18,18 +19,19 @@ const HandleFeatures = ({ upload, theFeature }) => {
     const [feature, setFeature] = useState(theFeature)
 
 
-    const s4 = () => {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-    }
+    // const s4 = () => {
+    //     return Math.floor((1 + Math.random()) * 0x10000)
+    //         .toString(16)
+    //         .substring(1);
+    // }
 
-    const uniqueId = () => {
-        return s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + '-' + s4() + '-' + s4();
-    }
+    // const uniqueId = () => {
+    //     return s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' +
+    //         s4() + '-' + s4() + '-' + s4() + '-' + s4();
+    // }
     const handleImageChange = (e) => {
         const file = e.target.files[0]
+        let lastPhotoPath = feature.icon.fullPath
         theFirebase.uploadFile('image', file, 'featureImage', {
             documentId: (res, x, y, url) => {
                 setFeature(preVal => { return { ...preVal, icon: { url: url, path: res.ref.fullPath } } })
@@ -37,7 +39,12 @@ const HandleFeatures = ({ upload, theFeature }) => {
         }).then(() => {
             console.log('image upload');
             setFeature(preVal => { return { ...preVal } })
+        }).then(() => {
+            if (!upload) {
+                theFirebase.deleteFile(`${lastPhotoPath}`)
+            }
         }).catch(err => console.log(err))
+            .catch(err => console.log(err))
     }
 
     const handleChange = (e) => {
@@ -50,7 +57,7 @@ const HandleFeatures = ({ upload, theFeature }) => {
     }
 
     const handleUpload = () => {
-        theFirebase.database().ref(`features/${feature.id}`).set(feature)
+        theFirebase.database().ref(`features/features/${feature.id}`).set(feature)
             .then(() => {
                 console.log('feature upload')
                 setFeature(initial)

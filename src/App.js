@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 //adminSide
 import Login from './component/screens/adminSide/login';
 //home
@@ -19,10 +20,10 @@ import UploadRecommended from './component/screens/adminSide/uploadRecomended';
 //article
 import AdminArticles from './component/screens/adminSide/articles';
 import EditArticle from './component/screens/adminSide/editArticle';
-import ArticleUpload from './component/screens/adminSide/articleUpload';
+import ArticleUpload from './component/screens/adminSide/uploadArticle';
 //group
 import Group from './component/screens/adminSide/group';
-import AddToGroup from './component/screens/adminSide/addToGroup';
+import AddToGroup from './component/screens/adminSide/uploadGroup';
 import EditGroup from './component/screens/adminSide/editGroup';
 //feature
 import Features from './component/screens/adminSide/features';
@@ -41,32 +42,30 @@ import Home from './component/screens/clientSide/home';
 import ContactUs from './component/screens/clientSide/contactUs';
 import OurStory from './component/screens/clientSide/ourStory';
 import ApartmentSell from './component/screens/clientSide/apartmentSell';
-import ApartmentRent from './component/screens/clientSide/apartmentRent';
 import ApartmentPage from './component/screens/clientSide/apartmentPage';
 import TheGroup from './component/screens/clientSide/theGroup';
 import Blog from './component/screens/clientSide/blog';
-import Article from './component/screens/clientSide/article'
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import Article from './component/screens/clientSide/article';
+
+//stuff
+
 import reducers from '../src/component/reducer';
 import firebase from './firebase';
 
 import {
   ReactReduxFirebaseProvider,
-  firebaseReducer
+
 } from 'react-redux-firebase'
-import OurArticles from './component/screens/adminSide/ourArticles';
-// import MoreExample from './moreExample';
+import Example from './emaxpleFirebase';
+
+
 
 // react-redux-firebase config
 const rrfConfig = {
   userProfile: 'users'
 }
 
-// Add firebase to reducers //
-// const rootReducer = combineReducers({
-//   firebase: firebaseReducer
-// })
+
 
 // Create store with reducers and initial state
 const initialState = {}
@@ -79,24 +78,18 @@ const rrfProps = {
 }
 
 function App() {
-
-  // const [apartment, setApartment] = useState([])
-
-
   return (
     <Router>
-
       <Switch>
         {/* <ItemProvider> */}
         <Provider store={store}>
           <ReactReduxFirebaseProvider {...rrfProps}>
-
-
+            <Route path='/example'><Example /></Route>
+            {/* client */}
             <Route exact path='/'><Home /></Route>
             <Route path='/contactUs'><ContactUs /></Route>
-            <Route path='/apartmentSell' ><ApartmentSell /></Route>
-            <Route path='/apartmentRent'><ApartmentRent /></Route>
-            <Route path='/apartmentPage/:id'><ApartmentPage /></Route>
+            <Route path='/apartments/:type' ><ApartmentSell /></Route>
+            <Route path='/apartmentPage/:type/:id'><ApartmentPage /></Route>
             <Route path='/theGroup'><TheGroup /></Route>
             <Route path='/ourStory'><OurStory /></Route>
             <Route exact path='/blog'><Blog /></Route>

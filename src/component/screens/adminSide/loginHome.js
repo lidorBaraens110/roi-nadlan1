@@ -5,8 +5,9 @@ import { Grid, Button, Typography, TextField, List, ListItem } from '@material-u
 import firebase from '../../../firebase';
 import { useFirebaseConnect, isLoaded, isEmpty, useFirebase } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
-import { PhotoSizeSelectLargeOutlined } from '@material-ui/icons';
-
+import { Check, PhotoSizeSelectLargeOutlined } from '@material-ui/icons';
+import { uniqueId } from './com/functions';
+import { object } from 'firebase-functions/lib/providers/storage';
 
 const Home = () => {
 
@@ -21,10 +22,11 @@ const Home = () => {
         mail: '',
         facebook: '',
         phone: '',
+        whatsApp: '',
         lat: '', lon: '',
         sentenceRepresentative: '',
-        logo: { url: '', path: '' },
-        mainPhoto: { url: '', path: '' },
+        logo: { url: '', fullPath: '' },
+        mainPhoto: { url: '', fullPath: '' },
         mainSentence: '',
         subSentence: '',
     })
@@ -42,23 +44,37 @@ const Home = () => {
     }
 
     const handleChangeImage = (e) => {
+        let lastPhotoPath;
         const { name } = e.target;
-        console.log(e.target.files[0])
-        console.log(name)
+        if (name == 'logo') {
+            lastPhotoPath = details.logo.fullPath;
+        } else {
+            lastPhotoPath = details.mainPhoto.fullPath;
+        }
         const file = e.target.files[0]
-        theFirebase.uploadFile('images', file, 'mainImages', {
+        const imageId = uniqueId();
+
+        theFirebase.uploadFile(`images/`, file, 'contactPhoto', {
             documentId: (res, x, y, url) => {
                 setDetails(preVal => {
                     console.log('setImage in state')
                     return { ...preVal, [name]: { url: url, fullPath: res.ref.fullPath } }
                 })
-            }
-        }).then(() => {
+            }, name: imageId
+        }).then((res) => {
             console.log('gj')
             console.log('setState again')
             setDetails(preVal => { return { ...preVal } })
+        }).then(() => {
+            console.log(lastPhotoPath)
+            if (lastPhotoPath !== '') {
+                console.log(lastPhotoPath)
+                theFirebase.deleteFile(`${lastPhotoPath}`)
+            }
+        }).then(() => {
+            console.log('delete photo')
         }).catch(err => console.log(err))
-
+            .catch(err => console.log(err))
     }
 
 
@@ -77,6 +93,11 @@ const Home = () => {
             return { ...preVal, [name]: value }
         })
     }
+    // const check = () => {
+    //     let x = Object.keys(details).filter((detail, k) => {
+    //         console.log()
+    //     })
+    // }
 
     if (!isLoaded(contact)) {
         return <div>loading..</div>
@@ -85,23 +106,28 @@ const Home = () => {
     return (
         <div style={{ textAlign: 'center' }}>
             <HeaderLogin />
+            <h3 style={{ margin: '1rem' }}> פרטי מנהל</h3>
+            {/* <button onClick={() => check()}>bliblu</button> */}
 
             <div style={{ padding: '2rem', display: 'flex', flexDirection: 'row' }}>
                 <List style={{ textAlign: 'right' }}>
                     <ListItem >
-                        <TextField disabled={!edit ? true : false} label='כתובת המשרד' variant='outlined' name='address' value={details.address} onChange={handleChange} />
+                        <TextField fullWidth disabled={!edit ? true : false} label='כתובת המשרד' variant='outlined' name='address' value={details.address} onChange={handleChange} />
                     </ListItem>
                     <ListItem>
-                        <TextField disabled={!edit ? true : false} label='שעות פתיחה' variant='outlined' name='opening' value={details.opening} onChange={handleChange} />
+                        <TextField fullWidth disabled={!edit ? true : false} label='שעות פתיחה' variant='outlined' name='opening' value={details.opening} onChange={handleChange} />
                     </ListItem>
                     <ListItem>
-                        <TextField disabled={!edit ? true : false} type='mail' label='מייל' variant='outlined' name='mail' value={details.mail} onChange={handleChange} />
+                        <TextField fullWidth disabled={!edit ? true : false} type='mail' label='מייל' variant='outlined' name='mail' value={details.mail} onChange={handleChange} />
                     </ListItem>
                     <ListItem >
-                        <TextField disabled={!edit ? true : false} label='כתובת פייסבוק' variant='outlined' name='facebook' value={details.facebook} onChange={handleChange} />
+                        <TextField fullWidth disabled={!edit ? true : false} label='טקסט שישלח לווטסאפ' variant='outlined' name='whatsApp' value={details.whatsApp} onChange={handleChange} />
                     </ListItem>
                     <ListItem >
-                        <TextField disabled={!edit ? true : false} label='טלפון' type='tel'
+                        <TextField fullWidth disabled={!edit ? true : false} label='כתובת פייסבוק' variant='outlined' name='facebook' value={details.facebook} onChange={handleChange} />
+                    </ListItem>
+                    <ListItem >
+                        <TextField fullWidth disabled={!edit ? true : false} label='טלפון' type='tel'
                             pattern="[0-9]{3}[0-9]{7}"
                             variant='outlined' name='phone' value={details.phone} onChange={handleChange} />
                     </ListItem>

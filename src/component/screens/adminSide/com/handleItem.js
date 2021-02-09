@@ -41,7 +41,7 @@ const initialItem = {
     images: []
 }
 const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) => {
-    const classes = useStyles();
+
     const [imageToDelete, setImageToDelete] = useState([]);
     const theFirebase = useFirebase();
     const s4 = () => {
@@ -58,8 +58,8 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
     const [pop, setPop] = useState(false)
     const [successPopUp, setSuccessPopUp] = useState(false)
     const [item, setItem] = useState(TheItemm)
-    const [imageAsFile, setImageAsFile] = useState('');
     const [dragging, setDragging] = useState(false);
+    const [dragIndex, setDragIndex] = useState();
     const dragItem = useRef()
     const dragNode = useRef()
 
@@ -87,10 +87,6 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
         })
     }
     const handleItemChange = (e) => {
-        console.log()
-        if (e.nativeEvent.inputType === 'insertLineBreak') {
-            console.log('enter')
-        }
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
@@ -101,9 +97,11 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
         });
     }
 
-    const deletePicture = async (image) => {
+    const deletePicture = (image) => {
+        console.log(upload)
+        console.log(image)
         if (upload) {
-            await theFirebase.deleteFile(image.fullPath).then(() => {
+            theFirebase.deleteFile(image.fullPath).then(() => {
                 setItem(preValue => {
                     return {
                         ...preValue, images: item.images.filter(img => {
@@ -122,35 +120,9 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
             })
             setImageToDelete(preVal => [...preVal, image])
         }
-        // if (!upload) {
-        //     updateTheImage(image)
-        // }
 
-
-
-        // console.log(image)
-        // const storageRef = storage.ref()
-        // var imageRef = storageRef.child(`images/${image.name}`);
-        // // Delete the file
-        // imageRef.delete().then(function () {
-        //     if (!upload) { updateTheImage() }
-        //     // File deleted successfully
-        // }).catch(function (error) {
-        //     // Uh-oh, an error occurred!
-        // });
     }
-    const updateTheImage = (image) => {
-        const the = theFirebase.database().ref(`/apartments/${type}/${item.itemId}`)
-            // console.log(the)
 
-            .set(item)
-            .then(() => console.log('finish'))
-            .catch(err => console.log(err))
-        // firebase.database().ref(`/apartments/${type}/${item.itemId}`).set(item)
-        //     .then(() => {
-        //         console.log('remove in database')
-        //     }).catch(err => console.log(err))
-    }
     const checkErr = () => {
         let flag = true;
         Object.keys(item).map(key => {
@@ -181,13 +153,7 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
     const uploadTheItem = () => {
         console.log('upload processing')
         if (checkErr()) {
-            if (!upload) {
-                imageToDelete.map(image => {
-                    theFirebase.deleteFile(image.fullPath).then(() => {
-                        console.log('image remove')
-                    })
-                })
-            }
+
             firebase.database().ref(`/apartments/${type}/${item.itemId}`).set(item)
                 .then(() => {
                     setItem(initialItem)
@@ -209,6 +175,11 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
     const editTheItem = () => {
         console.log('upload processing')
         if (checkErr()) {
+            imageToDelete.map(image => {
+                theFirebase.deleteFile(image.fullPath).then(() => {
+                    console.log('image remove')
+                })
+            })
             firebase.database().ref(`/apartments/${type}/${item.itemId}`).set(item)
                 .then(() => {
                     setTimeout(() => {
@@ -244,6 +215,7 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
         console.log(item)
     }
     const handleDragStart = (e, { image, i }) => {
+        setDragIndex(i)
         console.log('dragItem...', image)
         console.log('dragNode...', e.target)
         dragItem.current = i
@@ -252,6 +224,7 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
         setDragging(true)
     }
     const handleDragEnd = () => {
+        setDragIndex()
         console.log('ending drag...')
         setDragging(false)
         dragNode.current.removeEventListener('dragend', handleDragEnd);
@@ -269,12 +242,11 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
             // console.log(x)
             console.log('this is not the same item')
             console.log('old', item.images)
+            let newImages = item.images;
+            newImages.splice(i, 0, newImages.splice(currentItem, 1)[0])
+            console.log('new', newImages)
             setItem(preVal => {
-                let newImages = preVal.images;
-                // console.log(preVal.images)
-                newImages.splice(i, 0, newImages.splice(currentItem, 1)[0])
                 dragItem.current = i
-                console.log('new', newImages)
                 return { ...preVal, images: [...newImages] }
             })
             // setItem(preVal)
@@ -393,7 +365,7 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
                                 >
                                     {<span>{i === 0 ? 'תמונה ראשית' : i}</span>}
                                     <img draggable onDragEnter={dragging ? e => { handleDragEnter(e, { image, i }) } : null}
-                                        onDragStart={e => { handleDragStart(e, { image, i }) }} height='auto' width='100%' src={image.url} alt="image tag" />
+                                        onDragStart={e => { handleDragStart(e, { image, i }) }} height='auto' width='100%' style={{ opacity: i == dragIndex && '0.5' }} src={image.url} alt="image tag" />
                                     <IconButton onClick={() => deletePicture(image)}><HighlightOffIcon /></IconButton>
                                 </div>
                             </Grid>

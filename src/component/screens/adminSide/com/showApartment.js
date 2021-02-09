@@ -37,6 +37,13 @@ const ShowApartment = ({ type }) => {
         console.log(apartment)
         history.push({ pathname: '/login/editApartment/' + apartment.itemId, state: type })
     }
+
+    const handleDelete = (key) => {
+        console.log('delete')
+        firebase.database().ref(`/apartments/${type}/${key}`).remove()
+            .then(() => window.location.reload(false)).catch(err => console.log(err))
+    }
+
     if (!isLoaded(apartments)) {
         return <DefaultPage />
     }
@@ -45,8 +52,8 @@ const ShowApartment = ({ type }) => {
         return (
             <div style={{ textAlign: 'center' }}>
                 <HeaderLogin />
-                {type == 'forRent' && <h3 >נכסים להשכרה</h3>}
-                {type == 'forSell' && <h3>נכסים למכירה</h3>}
+                {type == 'forRent' && <h3 style={{ margin: '1rem' }}>נכסים להשכרה</h3>}
+                {type == 'forSell' && <h3 style={{ margin: '1rem' }}>נכסים למכירה</h3>}
                 <div style={{ height: '80vh', width: '100vw', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <Button style={{ padding: '1rem', border: '1px solid black' }} onClick={handleUpload}>העלה נכס</Button>
                     <span>כרגע לא קיימות דירות</span>
@@ -58,7 +65,6 @@ const ShowApartment = ({ type }) => {
     return (
         <div style={{ textAlign: 'center' }}>
             <HeaderLogin />
-
             <Button style={{ margin: '1rem', padding: '1rem', border: '1px solid black' }} onClick={handleUpload}>העלה נכס</Button>
             <button onClick={() => console.log(apartments)}>בדוק את הנכסים</button>
             <Grid container >
@@ -70,11 +76,10 @@ const ShowApartment = ({ type }) => {
                     >
                         {/* <ApartmentCard rooms={item.rooms} name={item.name} address={item.address} onClick={() => editItem(item)} images={item.images} /> */}
                         <Card item={apartment.value} onClick={editApartment} imgClass='login-home-images' />
+                        <button onClick={() => handleDelete(apartment.key)}>מחק דירה</button>
                     </Grid>
                 })}
-
             </Grid>
-
         </div >
     )
 }
