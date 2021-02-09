@@ -139,7 +139,7 @@ export default function ButtonAppBar({ stat, backgroundColor }) {
                             <img height='auto' width='120rem' src={logo} style={{ flex: 1 }} />
                         </div>
 
-                        <IconButton href='tel:+972509677226'><PhoneIcon color='primary' fontSize='medium' /></IconButton>
+                        <IconButton href='tel:+972509677226'><PhoneIcon color='primary' fontSize='inherit' /></IconButton>
                     </Toolbar>
                     : <Toolbar style={{ display: 'flex', flexDirection: 'row', textAlign: 'right', justifyContent: 'space-between', padding: '1rem' }}>
                         <div onClick={() => link('')} style={{ cursor: 'pointer', backgroundColor: 'white', borderRadius: '20px 20px' }}>

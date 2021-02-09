@@ -9,7 +9,11 @@ const ContactCommon = ({ messageType, freeContent, itemName, title, type }) => {
     const theFirebase = useFirebase();
     const [sent, setSent] = useState(false);
     const [userDetails, setUserDetails] = useState({
-        check: false, id: uniqueId()
+        check: false, id: uniqueId(),
+        fullName: '',
+        phone: '',
+        email: '',
+        message: ''
     })
     const [errors, setErrors] = useState({
     })
@@ -59,9 +63,9 @@ const ContactCommon = ({ messageType, freeContent, itemName, title, type }) => {
         e.preventDefault();
         console.log(userDetails)
         if (handleValidation()) {
-            theFirebase.database().ref('/messages/' + messageType + '/' + uniqueId()).set(userDetails)
+            theFirebase.database().ref('/messages/' + messageType + '/' + userDetails.id).set(userDetails)
                 .then(() => {
-                    setUserDetails({ check: false, itemName: itemName, id: uniqueId() })
+                    setUserDetails({ check: false, itemName: itemName, id: uniqueId(), fullName: '', email: '', phone: '', message: '' })
                     setSent(true)
                     console.log('we did it')
                 })

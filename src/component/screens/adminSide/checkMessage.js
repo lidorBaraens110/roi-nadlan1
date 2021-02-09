@@ -177,7 +177,7 @@ const CheckMessage = () => {
                                                     <input type='checkBox' name={message.id} checked={message.check} onChange={(e) => handleCheckBox(e, 'apartment')} />
                                                 </TableCell>
                                                 <TableCell align="right" component="th" scope="row">
-                                                    {message.name}
+                                                    {message.fullName}
                                                 </TableCell>
                                                 <TableCell align="right">{message.phone}</TableCell>
                                                 <TableCell align="right">{message.email}</TableCell>
