@@ -3,7 +3,7 @@ import { useFirebaseConnect, isEmpty, isLoaded, useFirebase } from 'react-redux-
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import firebase, { storage } from '../../../firebase';
+import firebase from '../../../firebase';
 import Header from './com/headerAdmin';
 
 const Recommended = () => {

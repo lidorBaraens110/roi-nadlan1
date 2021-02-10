@@ -19,16 +19,6 @@ const HandleFeatures = ({ upload, theFeature }) => {
     const [feature, setFeature] = useState(theFeature)
 
 
-    // const s4 = () => {
-    //     return Math.floor((1 + Math.random()) * 0x10000)
-    //         .toString(16)
-    //         .substring(1);
-    // }
-
-    // const uniqueId = () => {
-    //     return s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' +
-    //         s4() + '-' + s4() + '-' + s4() + '-' + s4();
-    // }
     const handleImageChange = (e) => {
         const file = e.target.files[0]
         let lastPhotoPath = feature.icon.fullPath

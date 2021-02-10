@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Header from './com/headerAdmin';
 import HandleRec from './com/handleRecommned';
 

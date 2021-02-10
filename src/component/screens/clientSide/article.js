@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Header from '../../header';
-import { useItems } from '../../../context/itemContext';
+
 import Footer from '../../footer';
 import { useFirebaseConnect, isEmpty, isLoaded } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
@@ -17,13 +17,6 @@ const Article = ({ }) => {
     ])
 
     const article = useSelector(state => state.firebase.data.articles && state.firebase.data.articles[id])
-    // const [article, setArticle] = useState();
-    // const allArticle = useItems().articles;
-    // useEffect(() => {
-    //     let x = allArticle.filter(article => article.id == id)
-    //     setArticle(x[0])
-
-    // }, [useItems()])
     useEffect(() => {
         console.log(new Date())
         var img = new Image()

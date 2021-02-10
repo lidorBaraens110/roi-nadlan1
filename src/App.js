@@ -56,7 +56,7 @@ import {
   ReactReduxFirebaseProvider,
 
 } from 'react-redux-firebase'
-import Example from './emaxpleFirebase';
+
 
 
 
@@ -84,7 +84,6 @@ function App() {
         {/* <ItemProvider> */}
         <Provider store={store}>
           <ReactReduxFirebaseProvider {...rrfProps}>
-            <Route path='/example'><Example /></Route>
             {/* client */}
             <Route exact path='/'><Home /></Route>
             <Route path='/contactUs'><ContactUs /></Route>

@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import HeaderLogin from './com/headerAdmin';
-import { Grid, Button, Typography, TextField, List, ListItem } from '@material-ui/core';
+import { Button, Typography, TextField, List, ListItem } from '@material-ui/core';
 import firebase from '../../../firebase';
 import { useFirebaseConnect, isLoaded, isEmpty, useFirebase } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
-import { Check, PhotoSizeSelectLargeOutlined } from '@material-ui/icons';
 import { uniqueId } from './com/functions';
-import { object } from 'firebase-functions/lib/providers/storage';
 
 const Home = () => {
 
-    const history = useHistory()
+
     const theFirebase = useFirebase()
     useFirebaseConnect([
         'contact'
@@ -32,7 +30,6 @@ const Home = () => {
     })
 
     const [edit, setEdit] = useState(false);
-    const [load, seLoad] = useState(false);
     const contact = useSelector(state => state.firebase.data.contact);
     const handleUpdate = () => {
         firebase.database().ref('contact').set(details)
@@ -93,11 +90,7 @@ const Home = () => {
             return { ...preVal, [name]: value }
         })
     }
-    // const check = () => {
-    //     let x = Object.keys(details).filter((detail, k) => {
-    //         console.log()
-    //     })
-    // }
+
 
 
 

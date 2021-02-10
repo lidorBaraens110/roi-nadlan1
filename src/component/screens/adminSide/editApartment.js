@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import firebase, { storage } from '../../../firebase';
-// import { Icon, IconButton, List, ListItem } from '@material-ui/core';
-// import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import React, { useState } from 'react';
 import HandleItem from './com/handleItem';
 import HeaderLogin from './com/headerAdmin';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -23,14 +20,7 @@ const EditApartment = () => {
 
     const [flag, setFlag] = useState(false);
     const [item, setItem] = useState({});
-    // useEffect(() => {
-    //     console.log('hellp')
-    //     console.log(location.state)
-    //     setItem(location.state)
-    //     if (item) {
-    //         setFlag(true)
-    //     }
-    // }, [location])
+
     if (!isLoaded(apartment)) {
         return <DefaultPage />
     }

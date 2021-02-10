@@ -365,8 +365,8 @@ div {
     font-size: 1.5rem;
   }
   .contact-icon {
-    width: 20vw;
-    height: auto;
+    width: 64px;
+    height: 64px;
   }
   .contact-content {
     padding: 0;

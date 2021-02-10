@@ -3,7 +3,6 @@ import { Grid } from '@material-ui/core';
 import { useLocation } from 'react-router-dom';
 import Header from '../../header';
 import Footer from '../../footer';
-import { useItems } from '../../../context/itemContext';
 import Recommended from '../../recommendedSwipe';
 
 import { useSelector } from 'react-redux';
@@ -16,13 +15,11 @@ const OurStory = () => {
     useFirebaseConnect([
         `recommended`,
         `ourArticles`
-        // { path: '/todos' } // object notation
     ])
     const recommended = useSelector(state => state.firebase.ordered.recommended);
     const ourArticles = useSelector(state => state.firebase.ordered.ourArticles);
     const location = useLocation()
-    const [load, setLoad] = useState(false);
-    // const recommended = useItems().recommended;
+
     const [mobileView, setMobileView] = useState(false)
 
     useEffect(() => {
@@ -71,12 +68,8 @@ const OurStory = () => {
 
             </Grid>
             {!isEmpty(recommended) && <Recommended recommended={recommended} />}
-            {/* {!load ? <div>loading...</div> : < div style={{ padding: '0 2rem 2rem' }}>
-              
-            </div>} */}
-
             <Footer />
-            {/* <FooterSticky /> */}
+
         </div>
     )
 }

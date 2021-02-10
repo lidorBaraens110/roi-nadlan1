@@ -14,14 +14,11 @@ import Parking from '../../../assets/parking.png';
 import Address from '../../../assets/map.png';
 import Header from '../../header';
 import Footer from '../../footer';
-import FooterSticky from '../../footerSticky';
 import ContactCommon from '../../contactCommon';
-import { useItems } from '../../../context/itemContext';
 import SwipeableViews from 'react-swipeable-views';
 import FullScreenImages from '../../fullScreenImages';
-import { useFirebase } from 'react-redux-firebase';
 import { useFirebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import logo from '../../../assets/loggo.png';
 
 const ApartmentPage = () => {
@@ -62,9 +59,6 @@ const ApartmentPage = () => {
 
 
     const handleSwitching = e => {
-        console.log((apartment.images.length - 1) - e)
-        console.log(e - (apartment.images.length - 1) * -1)
-        console.log(e)
         setIndex(e)
     }
     const handleFullScreen = (i) => {
@@ -241,7 +235,6 @@ const ApartmentPage = () => {
                             : <div>loading...</div>}
                     </div>
                     <Footer />
-                    {/* <FooterSticky /> */}
                 </div>
             }
         </div >

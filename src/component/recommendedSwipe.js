@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import Card from '@material-ui/core/Card';
 import { autoPlay } from 'react-swipeable-views-utils';
 import { Button } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const RecommendedSwipe = ({ recommended }) => {
 
-    const [recommendedState, setRecommendedState] = useState(recommended)
     const [auto, setAuto] = useState(true);
     const [index, setIndex] = useState(0);
     const [open, setOpen] = useState(false)
@@ -59,7 +54,7 @@ const RecommendedSwipe = ({ recommended }) => {
                         </div>
                     }
                 })}
-            </AutoPlaySwipeableViews >
+            </AutoPlaySwipeableViews>
             <div>
                 {
                     recommended.map((pic, i) => {
@@ -79,19 +74,11 @@ const RecommendedSwipe = ({ recommended }) => {
                     })
                 }
                 <br />
-
-
                 <Button onClick={() => setOpen(preVal => !preVal)} style={{ padding: '0.5 1rem', backgroundColor: '#4169E1', color: 'white', fontWeight: '500', borderRadius: '0%' }}>
                     להמלצה המקורית
                 </Button>
-
             </div>
-            {/* <div >
-                <span ></span>
-            </div> */}
         </div >
-
-
     )
 }
 export default RecommendedSwipe;

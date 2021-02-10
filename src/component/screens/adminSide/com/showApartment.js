@@ -74,7 +74,6 @@ const ShowApartment = ({ type }) => {
                         key={i}
                         xs={12} sm={12} md={6} lg={6} xl={6}
                     >
-                        {/* <ApartmentCard rooms={item.rooms} name={item.name} address={item.address} onClick={() => editItem(item)} images={item.images} /> */}
                         <Card item={apartment.value} onClick={editApartment} imgClass='login-home-images' />
                         <button onClick={() => handleDelete(apartment.key)}>מחק דירה</button>
                     </Grid>

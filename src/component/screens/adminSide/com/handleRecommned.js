@@ -71,20 +71,6 @@ const HandleRecommended = ({ upload, rec, id }) => {
             .catch(err => console.log(err))
     }
 
-    // const deletePicture = (image) => {
-    //     console.log(image)
-    //     const storageRef = storage.ref()
-    //     var imageRef = storageRef.child(`images/${image.name}`);
-    //     // Delete the file
-    //     imageRef.delete().then(function () {
-    //         setRecommended(preVal => {
-    //             return { ...preVal, image: {} }
-    //         })
-    //         // File deleted successfully
-    //     }).catch(function (error) {
-    //         // Uh-oh, an error occurred!
-    //     });
-    // }
 
     return (
         <div style={{ textAlign: 'center', paddingBottom: '2rem' }}>

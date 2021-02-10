@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Grid } from '@material-ui/core';
+
 import Header from '../../header';
 import Footer from '../../footer';
-import FooterSticky from '../../footerSticky';
-import HandShake from '../../../assets/hand-shake.png';
+
 import { useFirebaseConnect, isEmpty, isLoaded } from 'react-redux-firebase';
 import { CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
@@ -23,18 +22,7 @@ const TheGroup = () => {
     const collaboration = useSelector(state => state.firebase.ordered.collaboration)
 
     const location = useLocation()
-    const [mobileView, setMobileView] = useState();
-    useEffect(() => {
-        const setResponsiveness = () => {
-            console.log('hellp')
-            return window.innerWidth < 900
-                ? setMobileView(true)
-                : setMobileView(false);
-        };
-        setResponsiveness();
-        window.addEventListener("resize", () => setResponsiveness());
 
-    }, [])
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [location]);

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import Footer from '../../footer';
-import FooterSticky from '../../footerSticky';
+
 import Header from '../../header';
 import Phone from '../../../assets/phone-call.png';
 import WhatsApp from '../../../assets/whatsapp.png';
@@ -11,7 +11,6 @@ import { useLocation } from 'react-router-dom';
 import { useFirebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import { useSelector } from 'react-redux';
 import DefaultPage from '../../defaultPage';
-import { CircularProgress } from '@material-ui/core';
 
 
 const ContactUs = () => {
@@ -67,7 +66,7 @@ const ContactUs = () => {
                 <span style={{ fontWeight: '500' }}>{contact.sentenceRepresentative}</span>
             </div>
             <ContactCommon freeContent title='ליצירת קשר ולתיאום פגישה' messageType='generalMessages' itemName='' />
-            {/* <FooterSticky /> */}
+
             <Footer />
         </div >
     )

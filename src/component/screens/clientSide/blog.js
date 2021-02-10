@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { CircularProgress, Grid, Card } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Header from '../../header';
 import { Pagination } from '@material-ui/lab'
-import { useItems } from '../../../context/itemContext';
+
 import { useHistory, useLocation } from 'react-router-dom';
 import Footer from '../../footer';
 import { useFirebaseConnect, isEmpty, isLoaded } from 'react-redux-firebase';

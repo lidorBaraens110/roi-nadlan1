@@ -38,7 +38,6 @@ const ApartmentSell = () => {
         pitch: 0,
     });
     const selectedRef = useRef(null)
-    const [xx, setX] = useState([])
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [location]);
@@ -79,7 +78,6 @@ const ApartmentSell = () => {
     const handleChange = (event, value) => {
         setPage(value);
         setApartmentToShow(apartments.filter((z, i) => {
-            console.log(i)
             return ((value - 1) * 10) <= i && i < ((value * 10) + 1)
         }))
         window.scrollTo(0, 400)
@@ -90,8 +88,6 @@ const ApartmentSell = () => {
     }
 
     if (!isLoaded(apartments)) {
-        console.log(apartments)
-        console.log(type)
         return <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img src={logo} className='blink-image' />
         </div>
@@ -184,9 +180,6 @@ const ApartmentSell = () => {
                         })}
                     </Grid>
                 </div>
-                <button onClick={() => apartmentsToShow.map(apartment => {
-                    console.log(apartment.i)
-                })}> check</button>
                 <Pagination style={{ justifyContent: 'center', marginBottom: '1rem', display: 'flex' }}
                     count={countPage} page={page} onChange={handleChange} color="primary" />
             </>

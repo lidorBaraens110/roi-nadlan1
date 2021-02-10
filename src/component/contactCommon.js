@@ -99,10 +99,8 @@ const ContactCommon = ({ messageType, freeContent, itemName, title, type }) => {
     }
 
     return (
-        <div style={{ textAlign: 'center', margin: '1rem 0' }}>
-
+        <div style={{ textAlign: 'center', margin: '1rem 1%' }}>
             <form
-
                 className="user-details"
                 onSubmit={onSubmit}
                 noValidate
@@ -124,7 +122,7 @@ const ContactCommon = ({ messageType, freeContent, itemName, title, type }) => {
                     {freeContent && <textarea cols="50" rows="8"
                         style={{ width: '90%', padding: '0.5rem', margin: '0.5rem 0', border: '1px solid gray', borderRadius: '2px' }}
                         name='message' type='email' onChange={handleUserDetail} value={userDetails.message}
-                        placeholder='טקסט חופשי' />
+                        placeholder='תוכן הפניה' />
                     }
                     {!sent ? <Button type="submit"
                         style={{ borderRadius: '0', backgroundColor: 'black', color: 'white', padding: '0.5rem 2rem' }}>

@@ -32,11 +32,6 @@ const TheCard = ({ item, imgClass, onClick, cardName, type }) => {
             }
 
             <div style={{ textAlign: 'right', padding: '0.5rem' }}>
-                {/* <div className='crop'>
-                    <span style={{ fontSize: '0.8rem', fontWeight: '500', color: '#3ca2c3' }}>
-                        {item.name}
-                    </span>
-                </div> */}
                 <div style={{ fontSize: '0.8rem', fontWeight: '500', color: '#3ca2c3' }}>
                     <span >{item.address}, {item.city}</span>
                 </div>
@@ -59,11 +54,8 @@ const TheCard = ({ item, imgClass, onClick, cardName, type }) => {
                     </div>
                     <div style={{ flex: 2, textAlign: 'left' }}>
                         <Button style={{ backgroundColor: '#3ca2c3', color: 'white', fontSize: '0.7rem' }} onClick={() => onClick(item, type)}>{'לפרטים>'}</Button></div>
-
                 </div>
-
             </div>
-
         </Card >
     )
 }

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Header from './com/headerAdmin';
-import { useFirebase, useFirebaseConnect, isEmpty, isLoaded } from 'react-redux-firebase';
+import { useFirebaseConnect, isEmpty, isLoaded } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import firebase from '../../../firebase';
 
@@ -23,8 +22,7 @@ const CheckMessage = () => {
     const generalMessages = useSelector(state => state.firebase.ordered.messages && state.firebase.ordered.messages['generalMessages']);
     const apartmentMessages = useSelector(state => state.firebase.ordered.messages && state.firebase.ordered.messages['apartmentMessages']);
 
-    // const generalMessages = useItems().generalMessages;
-    // const nameMessages = useItems().nameMessages
+
     const [general, setGeneral] = useState([])
     const [apartment, setApartment] = useState([])
 

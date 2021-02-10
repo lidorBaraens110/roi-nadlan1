@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles } from '@material-ui/core';
 import Carousel from "react-elastic-carousel";
-import { Slider } from '@material-ui/core';
 import Card from './card';
 
 const styles = {
@@ -21,7 +20,6 @@ const useStyle = makeStyles({
 const ImageCardSlide = ({ items, onClick, type }) => {
     const [mobileView, setMobileView] = useState();
     const [index, setIndex] = useState(0);
-    const [isWidth, setIsWidth] = useState([])
 
     const handleChangeIndex = e => {
         setIndex(e)
