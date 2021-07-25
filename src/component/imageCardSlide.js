@@ -6,10 +6,10 @@ import Card from './card';
 
 const styles = {
     root: {
-        padding: '0',
+        padding: '0 15px ',
     },
     slideContainer: {
-        padding: '0 10px 0',
+        padding: '0 15px 0 0',
     },
 };
 const useStyle = makeStyles({
@@ -54,8 +54,8 @@ const ImageCardSlide = ({ items, onClick, type }) => {
                         items.map((item, i) => {
                             if (item.value) {
                                 return <Card key={i} item={item.value} type={type}
-                                    imgClass={items.length < 2 ? 'slide-image-1' : 'slide-image'}
-                                    cardName={items.length < 2 ? 'home-card-apartment-1' : 'home-card-apartment'}
+                                    imgClass={'slide-image'}
+                                    cardName={'home-card-apartment'}
                                     onClick={onClick}
                                 />
                             }
@@ -63,20 +63,21 @@ const ImageCardSlide = ({ items, onClick, type }) => {
                     }
                 </Carousel>
                 :
-                <div style={{ textAlign: 'center' }}><SwipeableViews
-                    index={index} onChangeIndex={handleChangeIndex}
-                    enableMouseEvents
-                    style={styles.root} slideStyle={styles.slideContainer}>
-                    {
-                        items.map((item, i) => {
-                            return <Card key={i} item={item.value} type={type}
-                                imgClass='slide-image'
-                                cardName='home-card-apartment'
-                                onClick={onClick}
-                            />
-                        })
-                    }
-                </SwipeableViews>
+                <div style={{ textAlign: 'center' }}>
+                    <SwipeableViews
+                        index={index} onChangeIndex={handleChangeIndex}
+                        enableMouseEvents
+                        style={styles.root} slideStyle={styles.slideContainer}>
+                        {
+                            items.map((item, i) => {
+                                return <Card key={i} item={item.value} type={type}
+                                    imgClass='slide-image'
+                                    cardName='home-card-apartment'
+                                    onClick={onClick}
+                                />
+                            })
+                        }
+                    </SwipeableViews>
                     {
                         items.map((pic, i) => {
                             return <div

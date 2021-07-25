@@ -1,25 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import firebase, { storage } from '../../../../firebase';
-import { makeStyles } from '@material-ui/core/styles';
 import { IconButton, List, DialogActions, TextField, Input, Button, Dialog, DialogContent, DialogTitle, Grid } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useFirebase } from 'react-redux-firebase';
-import { useSelector } from 'react-redux';
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 import Dropzone from 'react-dropzone';
-
+import firebase, { storage } from '../../../../firebase';
+import DropAndCrop from './dropAndCrop';
+import { uniqueId, image64toCanvasRef, extractImageFileExtensionFromBase64, base64StringtoFile } from './functions'
 // import UploadImage from '../com/uploadImage';
 
 
-const filesPath = 'images';
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: '25ch',
-        },
-    },
-}));
+const acceptedFileTypes = 'image/x-png,image/png,image/jpg,image/jpeg,image/gif';
 const initialItem = {
     name: '',
     address: '',
@@ -36,37 +29,32 @@ const initialItem = {
     freeContext: '',
     favorite: '',
     favorites: [],
+    avatarImage: { url: '', fullPath: '' },
     lat: '',
     lon: '',
     images: []
 }
 const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) => {
-
     const [imageToDelete, setImageToDelete] = useState([]);
     const theFirebase = useFirebase();
-    const s4 = () => {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-    }
-    const uniqueId = () => {
-        return s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + '-' + s4() + '-' + s4();
-    }
     const [imgPercent, setImgPercent] = useState();
-    const history = useHistory()
+    const history = useHistory();
+
     const [pop, setPop] = useState(false)
     const [successPopUp, setSuccessPopUp] = useState(false)
     const [item, setItem] = useState(TheItemm)
     const [dragging, setDragging] = useState(false);
     const [dragIndex, setDragIndex] = useState();
-    const dragItem = useRef()
-    const dragNode = useRef()
+    const dragItem = useRef();
+    const dragNode = useRef();
 
+    // useEffect(() => {
+    //     console.log('salasl')
+    // }, [item])
 
     const handleDrop = (files) => {
         console.log('proccess')
-        theFirebase.uploadFiles('images', files, 'images', {
+        theFirebase.uploadFiles('images/' + type, files, 'images/' + type, {
             documentId: (res, x, y, url) => {
                 console.log(Math.round((res.bytesTransferred / res.totalBytes) * 100))
                 const percentUploaded = Math.round((res.bytesTransferred / res.totalBytes) * 100)
@@ -96,7 +84,6 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
             }
         });
     }
-
     const deletePicture = (image) => {
         console.log(upload)
         console.log(image)
@@ -153,7 +140,6 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
     const uploadTheItem = () => {
         console.log('upload processing')
         if (checkErr()) {
-
             firebase.database().ref(`/apartments/${type}/${item.itemId}`).set(item)
                 .then(() => {
                     setItem(initialItem)
@@ -169,10 +155,9 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
         } else {
             setPop(true)
         }
-
     }
     //edit page
-    const editTheItem = () => {
+    const editTheItem = useMemo(() => () => {
         console.log('upload processing')
         if (checkErr()) {
             imageToDelete.map(image => {
@@ -184,7 +169,7 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
                 .then(() => {
                     setTimeout(() => {
                         setSuccessPopUp(false)
-                        history.push('/login/home');
+                        history.push('/login/' + type === 'forSell' ? 'apartmentsSell' : 'apartmentsRent');
                     }, 3000)
                     setSuccessPopUp(true);
                     console.log('we did it')
@@ -194,7 +179,7 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
         } else {
             setPop(true)
         }
-    }
+    }, [item, imageToDelete])
     const addToFavorites = () => {
         console.log(item.favorite)
 
@@ -223,6 +208,7 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
         dragNode.current.addEventListener('dragend', handleDragEnd);
         setDragging(true)
     }
+
     const handleDragEnd = () => {
         setDragIndex()
         console.log('ending drag...')
@@ -232,27 +218,58 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
         dragNode.current = null;
     }
 
-    const handleDragEnter = (e, { image, i }) => {
-        // console.log('enterDrag..', image)
-        const currentItem = dragItem.current;
-        if (e.target !== dragNode.current) {
-            console.log('current item...', currentItem)
-            // let x = item.images.indexOf(currentItem);
-            console.log('image', image)
-            // console.log(x)
-            console.log('this is not the same item')
-            console.log('old', item.images)
-            let newImages = item.images;
-            newImages.splice(i, 0, newImages.splice(currentItem, 1)[0])
-            console.log('new', newImages)
-            setItem(preVal => {
-                dragItem.current = i
-                return { ...preVal, images: [...newImages] }
-            })
-            // setItem(preVal)
-        }
-    }
 
+    const handleDragEnter = useMemo(() => {
+        return (e, { image, i }) => {
+            // console.log('enterDrag..', image)
+            const currentItem = dragItem.current;
+            if (e.target !== dragNode.current) {
+                console.log('current item...', currentItem)
+                // let x = item.images.indexOf(currentItem);
+                console.log('image', image)
+                // console.log(x)
+                console.log('this is not the same item')
+                console.log('old', item.images)
+                let newImages = item.images;
+                newImages.splice(i, 0, newImages.splice(currentItem, 1)[0])
+                console.log('new', newImages)
+                setItem(preVal => {
+                    dragItem.current = i
+                    return { ...preVal, images: [...newImages] }
+                })
+                // setItem(preVal)
+            }
+        }
+    }, [])
+
+    const uploadMainImage = (image) => {
+        if (item.avatarImage.fullPath && item.avatarImage.fullPath !== ' ') {
+            theFirebase.deleteFile(item.avatarImage.fullPath).then(() => {
+                console.log('deleted')
+            }).catch(err => console.log(err))
+        }
+        console.log('upload mainImage')
+        let avatarImage = {}
+        theFirebase.uploadFile('images/123' + type, image, 'images/' + type, {
+            name: uniqueId(),
+            documentId: (res, x, y, url) => {
+                // console.log(Math.round((res.bytesTransferred / res.totalBytes) * 100))
+                const percentUploaded = Math.round((res.bytesTransferred / res.totalBytes) * 100)
+                setImgPercent(percentUploaded);
+                avatarImage = {
+                    url: url, fullPath: res.ref.fullPath
+                };
+                // console.log(url)
+            }
+        },
+        ).then(res => {
+            console.log(avatarImage)
+            setItem(preVal => {
+                return { ...preVal, avatarImage: avatarImage }
+            })
+            //   console.log(res)
+        }).catch(err => console.log(err))
+    }
     return (
         <div>
             <div dir='rtl' noValidate style={{
@@ -322,7 +339,10 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
                         })}
                     </div>
                 </div>
-
+                <TextField dir='rtl' id="standard-basic" label={'latitude-קו רוחב'} variant='outlined'
+                    style={{ fontSize: '20px', display: 'inline-block', direction: 'rtl' }} value={item.lat} name='lat' onChange={handleItemChange} />
+                <TextField dir='rtl' id="standard-basic" label={'longitude-קו אורך'} variant='outlined'
+                    style={{ fontSize: '20px', display: 'inline-block', direction: 'rtl' }} value={item.lon} name='lon' onChange={handleItemChange} />
             </div>
 
             <Dialog
@@ -361,30 +381,39 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
                               </Button>
                 </DialogActions>
             </Dialog>
+            <DropAndCrop handleCropImg={uploadMainImage} />
+            {item.avatarImage.url && <>
+                <h3>תמונה ראשית</h3>
+                <img src={item.avatarImage.url} style={{ height: '200px', width: '300px' }} />
+            </>
+            }
+            <hr />
+            <div style={{ textAlign: 'right' }}>
+                <span>תמונות נוספות</span>
+            </div>
 
-
-            <Dropzone onDrop={handleDrop}>
+            <Dropzone onDrop={handleDrop} accept={acceptedFileTypes}>
                 {({ getRootProps, getInputProps }) => (
                     <section>
-                        <div {...getRootProps()}>
+                        <div style={{ border: '1px black dashed' }} {...getRootProps()}>
                             <input {...getInputProps()} />
-                            <div style={{ height: '5rem', border: '1px black solid' }}>
-                                <p>גרור לכאן או לחץ כאן על מנת להוסיף תמונות לנכס</p>
+                            <div >
+                                <p style={{ fontSize: '5rem' }}>+</p>
                             </div>
                         </div>
                     </section>
                 )}
             </Dropzone>
+            <br />
             {
                 item.images && <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <Grid container spacing={5}>
                         {item.images.map((image, i) => {
                             return <Grid key={i} item xs={12} sm={12} md={4} lg={4} xl={4}>
-                                <div key={i}
-                                >
-                                    {<span>{i === 0 ? 'תמונה ראשית' : i}</span>}
+                                <div key={i}>
+                                    <span>{i}</span>
                                     <img draggable onDragEnter={dragging ? e => { handleDragEnter(e, { image, i }) } : null}
-                                        onDragStart={e => { handleDragStart(e, { image, i }) }} height='auto' width='100%' style={{ opacity: i == dragIndex && '0.5' }} src={image.url} alt="image tag" />
+                                        onDragStart={e => { handleDragStart(e, { image, i }) }} style={{ height: '200px', width: '300px', objectFit: 'contain', opacity: i == dragIndex && '0.5', cursor: 'move' }} src={image.url} alt="image tag" />
                                     <IconButton onClick={() => deletePicture(image)}><HighlightOffIcon /></IconButton>
                                 </div>
                             </Grid>
@@ -392,56 +421,12 @@ const HandleItem = ({ popUpSuccessSpan, UpButtonSpan, upload, TheItemm, type }) 
                     </Grid>
                 </div>
             }
+            <br />
             <button onClick={() => test()}>לחץ לפרטים</button>
             <button style={{ fontSize: '16' }} onClick={upload ? uploadTheItem : editTheItem}>{UpButtonSpan}</button>
-            {/* <UploadImage /> */}
-
         </div >
     )
 }
 
 
 export default HandleItem;
-
-// {Object.keys(item).map((key, i) => {
-
-//     if (key === 'images') {
-//         return <div key={i}>
-//             <span>{imgPercent}%</span>
-//         </div>
-//     } else {
-//         if (item[key] === false || item[key] === true) {
-//             return <div key={i} >
-
-//                 <input type='checkbox' style={{ fontSize: '20px', margin: '1rem' }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
-//                 <span>{key}</span>
-//             </div>
-//         }
-//         if (key == 'favorite') {
-//             return <div key={i}>
-//                 <span>מקומות מרכזיים</span>
-//                 <br />
-//                 <button onClick={addToFavorites}>+</button><input placeholder={key} style={{ fontSize: '20px', margin: '1rem' }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
-//                 <br />
-//                 {item.favorites.map((fav, i) => {
-//                     return <div key={i}> <button onClick={() => removeFromFavorites(i)}>-</button><span key={i}>{fav}</span>
-//                         <br />
-//                     </div>
-//                 })}
-//             </div>
-//         }
-//         if (key === 'freeContext') {
-
-//             return <textarea key={i} placeholder='טקסט חופשי' onKeyPress={handleItemChange}
-//                 style={{ fontSize: '20px', margin: '1rem' }} name={key} key={i} value={item[key]} onChange={handleItemChange} cols="40" rows="5" />
-//         }
-//         if (typeof (key) === 'string' && key !== 'itemId' && key !== 'favorites') {
-//             return <TextField dir='rtl' id="standard-basic" label={key} variant='outlined'
-//                 style={{
-//                     fontSize: '20px', display: 'inline-block', direction: 'rtl'
-//                     /*Optional*/
-//                 }} key={i} value={item[key]} name={key} onChange={handleItemChange} />
-//         }
-//     }
-// })
-// }

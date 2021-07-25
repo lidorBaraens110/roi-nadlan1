@@ -67,18 +67,24 @@ const ShowApartment = ({ type }) => {
             <HeaderLogin />
             <Button style={{ margin: '1rem', padding: '1rem', border: '1px solid black' }} onClick={handleUpload}>העלה נכס</Button>
             <button onClick={() => console.log(apartments)}>בדוק את הנכסים</button>
-            <Grid container >
-                {apartments.map((apartment, i) => {
-                    console.log(apartment.value);
-                    return <Grid item
-                        key={i}
-                        xs={12} sm={12} md={6} lg={6} xl={6}
-                    >
-                        <Card item={apartment.value} onClick={editApartment} imgClass='login-home-images' />
-                        <button onClick={() => handleDelete(apartment.key)}>מחק דירה</button>
-                    </Grid>
-                })}
-            </Grid>
+            <div className='apartments-sell-section'>
+                <Grid container
+                    space={5}
+                    alignItems='center'
+                    alignContent='center'
+                    style={{ margin: '2rem 0', width: '100%', maxWidth: '100%' }}>
+                    {apartments.map((apartment, i) => {
+                        console.log(apartment.value);
+                        return <Grid item
+                            key={i}
+                            xs={12} sm={12} md={6} lg={6} xl={6}
+                        >
+                            <Card item={apartment.value} onClick={editApartment} imgClass='login-home-images' cardName='apartment-card' />
+                            <button onClick={() => handleDelete(apartment.key)}>מחק דירה</button>
+                        </Grid>
+                    })}
+                </Grid>
+            </div>
         </div >
     )
 }

@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import Header from '../../header';
 import Footer from '../../footer';
 import Recommended from '../../recommendedSwipe';
-
 import { useSelector } from 'react-redux';
 import { useFirebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import logo from '../../../assets/loggo.png';

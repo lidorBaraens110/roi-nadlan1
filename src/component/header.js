@@ -17,10 +17,8 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { isLoaded, useFirebaseConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
-
         flexGrow: 1,
         textAlign: 'center',
         position: 'sticky',

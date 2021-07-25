@@ -158,16 +158,19 @@ const ApartmentSell = () => {
                 </ReactMapGL>
             </div>
 
-                <div style={{ textAlign: 'center' }}>
+                <div className='apartments-sell-section'>
                     <Grid container
-                        className='grid-apartment-sell'
-                        spacing={2}
-                        style={{ flexGrow: 1, margin: '2rem 0', width: '100%', maxWidth: '100%' }}
+                        // className='grid-apartment-sell'
+                        space={5}
+                        alignItems='center'
+                        alignContent='center'
+                        style={{ margin: '2rem 0', width: '100%', maxWidth: '100%' }}
 
                     >
                         {apartmentsToShow.map((item, i) => {
                             return <Grid item key={i}
-                                style={{ padding: '1rem 1rem 0', display: 'flex', justifyContent: 'center', textAlign: 'center' }}
+                                className='apartments-sell-grid-item'
+                                // style={{ padding: '1rem' }}
                                 xs={12} sm={12} md={6} lg={6} xl={6}>
                                 <Card item={item.value}
                                     type={type}
