@@ -20,8 +20,14 @@ const ArticleUpload = () => {
     const [article, setArticle] = useState({
         id: uniqueId(),
         title: '',
-        des: '',
-        img: { url: '', path: '' }
+        subTitle: '',
+        mainImg: { url: '', fullPath: '' },
+        content: '',
+        createDate: new Date(),
+        featureImage: '',
+        isPublish: false,
+        lastModified: new Date(),
+        createUser: ''
     })
 
 

@@ -3,7 +3,7 @@ import { useFirebaseConnect, isEmpty, isLoaded, useFirebase } from 'react-redux-
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import firebase, { storage } from '../../../firebase';
+import firebase from '../../../firebase';
 import Header from './com/headerAdmin';
 
 const Recommended = () => {
@@ -53,10 +53,10 @@ const Recommended = () => {
                     {!isEmpty(recommended) ?
                         recommended.map(rec => {
                             console.log(rec.key)
-                            let { image, name, content } = rec.value;
+                            let { img, name, content } = rec.value;
                             return <div key={rec.key}>
                                 <div style={{ marginBottom: '0.5rem' }}>
-                                    {image && <img src={image.url} style={{ height: 'auto', width: '10rem' }} />}
+                                    {img && <img src={img.url} style={{ height: 'auto', width: '10rem' }} />}
                                     <h5>{name}</h5>
                                     <span>{content}</span>
                                 </div>

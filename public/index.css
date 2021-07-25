@@ -53,9 +53,6 @@ div {
   font-size: 1.5rem;
   font-weight: 500;
 }
-.home-card-apartment {
-  border: 2px solid rgb(234, 234, 234);
-}
 .home-card-apartment:hover {
   border: 2px solid black;
   opacity: 0.8;
@@ -76,55 +73,25 @@ div {
   object-fit: cover;
   object-position: top;
 }
-
+.image-sell-apartment {
+  width: 100%;
+  height: auto;
+}
 .slide-image {
+  height: auto;
+  width: 100%;
+  object-fit: contain;
+}
+.slide-image-1 {
   height: 200px;
   width: 300px;
-  object-fit: cover;
-  cursor: pointer;
+  object-fit: contain;
 }
-.line-sell {
-  position: relative;
-  top: 10%;
-  left: -15%;
-  width: 53%;
-  height: 12%;
-  background-color: green;
-  border: solid 2px black;
-  transform: rotate(-45deg);
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  color: white;
-}
-.line-sold {
-  position: relative;
-  top: 10%;
-  left: -15%;
-  width: 53%;
-  height: 20%;
-  color: white;
-  background-color: red;
-  border: solid 2px black;
-  transform: rotate(-45deg);
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-}
-/* .slide-image-1 {
-  height: 200px;
-  width: 300px;
-  object-fit: fill;
-} */
-/* .home-card-apartment-1 {
+.home-card-apartment-1 {
   position: relative;
   height: 270px;
   width: auto;
-} */
+}
 .slide-image:hover {
   opacity: 0.8;
 }
@@ -150,34 +117,17 @@ div {
   height: auto;
 }
 /* apartment sell */
-
-.apartments-sell-section {
-  text-align: center;
-  max-width: 950px;
-  width: 950px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.image-sell-apartment {
-  width: 450px;
-  height: 300px;
-  object-fit: cover;
-}
-.apartments-sell-grid-item {
-  padding: 1rem;
-}
-.apartment-card {
-  /* height: auto; */
-  width: 450px;
-  /* object-fit: cover; */
-}
 .grid-apartment-sell {
-  /* padding: 0 13%; */
+  padding: 2% 12%;
 }
 .map-padding {
   padding: 0 13.5%;
 }
-
+.apartment-card {
+  height: auto;
+  width: 29rem;
+  object-fit: scale-down;
+}
 .image-map {
   height: 9rem;
   width: auto;
@@ -279,11 +229,6 @@ div {
 .article-content {
   text-align: right;
   margin-top: 2rem;
-  line-height: 1.5;
-}
-.article-content h2,
-p {
-  line-height: 1.2;
 }
 /* header/footer */
 .footer-map {
@@ -384,32 +329,7 @@ p {
   .group-com-roi {
     height: 100%;
   }
-  .home-card-apartment {
-    border: none;
-  }
-  .home-card-apartment:hover {
-    border: none;
-  }
   /* apartment sell */
-
-  .apartments-sell-grid-item {
-    padding: 1rem 0;
-  }
-  .image-sell-apartment {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-  }
-
-  .apartment-card {
-    /* height: auto; */
-    width: 100%;
-    /* object-fit: cover; */
-  }
-  .apartments-sell-section {
-    width: 100%;
-    max-width: 100%;
-  }
   .grid-apartment-sell {
     padding: 2% 0;
   }

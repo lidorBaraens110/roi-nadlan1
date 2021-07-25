@@ -9,10 +9,10 @@ const EditFeature = () => {
 
     const { id } = useParams()
     useFirebaseConnect([
-        `features/${id}`
+        `features/features${id}`
     ])
 
-    const feature = useSelector(state => state.firebase.data.features && state.firebase.data.features[id])
+    const feature = useSelector(state => state.firebase.data.features && state.firebase.data.features['features'][id])
 
 
     if (!isLoaded(feature)) {

@@ -2,23 +2,22 @@ import React, { useEffect, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles } from '@material-ui/core';
 import Carousel from "react-elastic-carousel";
-import { Slider } from '@material-ui/core';
 import Card from './card';
 
 const styles = {
     root: {
-        padding: '2rem 30px 0',
+        padding: '0 15px ',
     },
     slideContainer: {
-        padding: '0 10px 0',
+        padding: '0 15px 0 0',
     },
 };
 const useStyle = makeStyles({
     root: {
-        padding: '4rem 1rem 2rem',
+        padding: '2rem 0 0',
     }
 });
-const ImageCardSlide = ({ items, onClick }) => {
+const ImageCardSlide = ({ items, onClick, type }) => {
     const [mobileView, setMobileView] = useState();
     const [index, setIndex] = useState(0);
 
@@ -28,7 +27,7 @@ const ImageCardSlide = ({ items, onClick }) => {
     useEffect(() => {
 
         const setResponsiveness = () => {
-            console.log('hellp')
+
             return window.innerWidth < 900
                 ? setMobileView(true)
                 : setMobileView(false);
@@ -48,32 +47,37 @@ const ImageCardSlide = ({ items, onClick }) => {
     return (
         <div>
             {!mobileView ?
-                <Carousel className={classes.root} itemPadding={[20, 20, 20, 20]} showArrows={mobileView ? false : true} enableMouseSwipe={mobileView ? true : true} enableSwipe breakPoints={breakPoints} >
+
+                <Carousel className={classes.root} itemPadding={[20, 20, 20, 20]} showArrows={mobileView || items.length < 2 ? false : true}
+                    enableMouseSwipe={mobileView ? true : false} enableSwipe breakPoints={breakPoints} >
                     {
                         items.map((item, i) => {
-                            return <Card key={i} item={item.value}
-                                imgClass='slide-image'
-                                cardName='home-card-apartment'
-                                onClick={onClick}
-                            />
+                            if (item.value) {
+                                return <Card key={i} item={item.value} type={type}
+                                    imgClass={'slide-image'}
+                                    cardName={'home-card-apartment'}
+                                    onClick={onClick}
+                                />
+                            }
                         })
                     }
                 </Carousel>
                 :
-                <div style={{ textAlign: 'center' }}><SwipeableViews
-                    index={index} onChangeIndex={handleChangeIndex}
-                    enableMouseEvents
-                    style={styles.root} slideStyle={styles.slideContainer}>
-                    {
-                        items.map((item, i) => {
-                            return <Card key={i} item={item}
-                                imgClass='slide-image'
-                                cardName='home-card-apartment'
-                                onClick={onClick}
-                            />
-                        })
-                    }
-                </SwipeableViews>
+                <div style={{ textAlign: 'center' }}>
+                    <SwipeableViews
+                        index={index} onChangeIndex={handleChangeIndex}
+                        enableMouseEvents
+                        style={styles.root} slideStyle={styles.slideContainer}>
+                        {
+                            items.map((item, i) => {
+                                return <Card key={i} item={item.value} type={type}
+                                    imgClass='slide-image'
+                                    cardName='home-card-apartment'
+                                    onClick={onClick}
+                                />
+                            })
+                        }
+                    </SwipeableViews>
                     {
                         items.map((pic, i) => {
                             return <div
@@ -95,7 +99,7 @@ const ImageCardSlide = ({ items, onClick }) => {
                 </div>
 
             }
-        </div>
+        </div >
 
 
     );

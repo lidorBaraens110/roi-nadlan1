@@ -12,5 +12,5 @@ function CheckUserLogin() {
     }
 }
 
-export default CheckUserLogin
+export default CheckUserLogin;
 

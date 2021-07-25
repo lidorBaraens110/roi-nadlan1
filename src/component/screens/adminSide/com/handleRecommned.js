@@ -4,27 +4,19 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { IconButton, Icon, TextField } from '@material-ui/core';
 import Header from './headerAdmin';
 import firebase, { storage } from '../../../../firebase';
+import { useFirebase } from 'react-redux-firebase';
+import { uniqueId } from './functions';
 
 const initialRecommended = ({
     name: '',
     content: '',
-    image: {}
+    img: { url: '', fullPath: '' }
 })
 
 const HandleRecommended = ({ upload, rec, id }) => {
 
     const history = useHistory();
-
-    const s4 = () => {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-    }
-
-    const uniqueId = () => {
-        return s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + '-' + s4() + '-' + s4();
-    }
+    const theFirebase = useFirebase();
 
     const [imageAsFile, setImageAsFile] = useState({ name: '', url: '' })
     const [recommended, setRecommended] = useState(rec)
@@ -37,44 +29,30 @@ const HandleRecommended = ({ upload, rec, id }) => {
             return { ...preValue, [name]: value }
         })
     }
+
     const handlePictureChange = (e) => {
+        let lastPhotoPath = recommended.img.fullPath;
         const image = e.target.files[0]
-        uploadImage(image)
-
-    }
-
-    const uploadImage = (image) => {
-        console.log(imageAsFile)
-        const uriParts = image.name.split(".");
-        const fileType = uriParts[uriParts.length - 1];
-        console.log('start of upload')
-        let imageId = uniqueId() + '.' + fileType;
-        // async magic goes here...
-        if (image === '') {
-            console.error(`not an image, the image file is a ${typeof (image)}`)
-        } else {
-            const uploadTask = storage.ref(`/images/${imageId}`).put(image)
-            //initiates the firebase side uploading 
-            uploadTask.on('state_changed',
-                (snapShot) => {
-                    //takes a snap shot of the process as it is happening
-                    console.log(snapShot)
-                }, (err) => {
-                    //catches the errors
-                    console.log(err)
-                }, () => {
-                    // gets the functions from storage refences the image storage in firebase by the children
-                    // gets the download url then sets the image from firebase as the value for the imgUrl key:
-                    storage.ref('images').child(imageId).getDownloadURL()
-                        .then(fireBaseUrl => {
-                            console.log('first')
-                            setRecommended(preValue => {
-                                return { ...preValue, image: { url: fireBaseUrl, name: imageId } }
-                            })
-                            setImageAsFile('')
-                        })
+        const imageId = uniqueId()
+        console.log(image)
+        theFirebase.uploadFile('images', image, 'recommendedImage', {
+            documentId: (res, x, y, url) => {
+                setRecommended((preVal) => {
+                    return { ...preVal, img: { url: url, fullPath: res.ref.fullPath } }
                 })
-        }
+            }, name: imageId
+        }).then(() => {
+            console.log('gj')
+            setRecommended(preVal => { return { ...preVal } })
+        }).then(() => {
+            if (!upload) {
+                theFirebase.deleteFile(`${lastPhotoPath}`)
+            }
+        }).catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+            })
+
     }
 
     const uploadRecommended = () => {
@@ -93,20 +71,6 @@ const HandleRecommended = ({ upload, rec, id }) => {
             .catch(err => console.log(err))
     }
 
-    // const deletePicture = (image) => {
-    //     console.log(image)
-    //     const storageRef = storage.ref()
-    //     var imageRef = storageRef.child(`images/${image.name}`);
-    //     // Delete the file
-    //     imageRef.delete().then(function () {
-    //         setRecommended(preVal => {
-    //             return { ...preVal, image: {} }
-    //         })
-    //         // File deleted successfully
-    //     }).catch(function (error) {
-    //         // Uh-oh, an error occurred!
-    //     });
-    // }
 
     return (
         <div style={{ textAlign: 'center', paddingBottom: '2rem' }}>
@@ -114,9 +78,9 @@ const HandleRecommended = ({ upload, rec, id }) => {
             <div style={{ position: 'block', textAlign: 'center', display: 'flex', flexDirection: 'column', padding: '5% 10%' }}>
                 <input type='file' onChange={handlePictureChange} />
                 <br />
-                {recommended.image &&
+                {recommended.img &&
                     <div style={{ height: '20rem', textAlign: 'center', margin: '1rem 10%' }}>
-                        <img height='100%' width='auto' src={recommended.image.url} alt="image tag" />
+                        <img height='100%' width='auto' src={recommended.img.url} alt="image tag" />
                         <br />
                         <span> בחר תמונה אחרת לשינוי התמונה</span>
 

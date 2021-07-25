@@ -1,19 +1,8 @@
 import React, { useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { Grid, Button, Typography, TextField } from '@material-ui/core';
-import { useFirebase, useFirebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase';
-import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import HeaderLogin from './com/headerAdmin';
-import DefaultPage from '../../defaultPage';
-import firebase from '../../../firebase';
-import HandleGroup from './com/handleGroup';
 
-const initialPerson = {
-    name: '',
-    role: '',
-    des: '',
-    img: '',
-}
+import HandleGroup from './com/handleGroup';
 
 const AddToGroup = () => {
 
@@ -27,7 +16,6 @@ const AddToGroup = () => {
         return s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' +
             s4() + '-' + s4() + '-' + s4() + '-' + s4();
     }
-    const theFirebase = useFirebase();
     const [person, setPerson] = useState({
         name: '',
         role: '',
