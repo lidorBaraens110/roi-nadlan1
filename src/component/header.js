@@ -26,9 +26,6 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 100
 
     },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
     title: {
         flexGrow: 1,
 
@@ -72,11 +69,19 @@ export default function ButtonAppBar({ stat, backgroundColor }) {
         <div className={classes.root} >
             <AppBar style={{ position: stat && 'static', background: !backgroundColor && 'none', backgroundColor: !backgroundColor ? 'none' : '#f8f8f8', color: !backgroundColor ? '#0D1B3D' : 'black' }}>
                 {mobileView ?
-                    <Toolbar style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '0.5rem' }}>
-
-                        <IconButton onClick={handleDrawer} edge="start" className={classes.menuButton} color='primary' aria-label="menu">
-                            <MenuIcon fontSize='inherit' />
-                        </IconButton>
+                    <Toolbar style={{
+                        display: 'flex', flexDirection: 'row',
+                        justifyContent: 'space-between', padding: 0
+                    }}>
+                        <div style={{ flex: 1, justifyContent: 'flex-start', display: 'flex' }}>
+                            <IconButton
+                                onClick={handleDrawer}
+                                edge="start"
+                                color='primary'
+                                aria-label="menu">
+                                <MenuIcon fontSize='inherit' />
+                            </IconButton>
+                        </div>
                         <Drawer
                             {...{
                                 anchor: "right",
@@ -85,7 +90,7 @@ export default function ButtonAppBar({ stat, backgroundColor }) {
                             }}
                         >
 
-                            <List style={{ textAlign: 'right', padding: '1rem ' }}>
+                            <List style={{ textAlign: 'right' }}>
                                 <div onClick={handleDrawer} style={{ cursor: 'pointer', textAlign: 'left' }}>
                                     <HighlightOffIcon />
                                 </div>
@@ -131,19 +136,27 @@ export default function ButtonAppBar({ stat, backgroundColor }) {
                                     </div>
                                 </ListItem>
                             </List>
-                            <div></div>
+
                         </Drawer>
-                        <div onClick={() => link('')} style={{ cursor: 'pointer' }}>
+                        <div onClick={() => link('')} style={{ cursor: 'pointer', flex: 1 }}>
                             <img height='auto' width='120rem' src={logo} style={{ flex: 1 }} />
                         </div>
+                        <div style={{ flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+                            <IconButton size='small'
+                                href={`https://api.whatsapp.com/send?phone=+972${contact.phone}&text=${contact.whatsApp}`}>
+                                <WhatsAppIcon style={{ color: 'green' }} />
+                            </IconButton>
+                            <IconButton size='small' href='tel:+972509677226'>
+                                <PhoneIcon color='primary' />
+                            </IconButton>
+                        </div>
 
-                        <IconButton href='tel:+972509677226'><PhoneIcon color='primary' fontSize='inherit' /></IconButton>
                     </Toolbar>
                     : <Toolbar style={{ display: 'flex', flexDirection: 'row', textAlign: 'right', justifyContent: 'space-between', padding: '1rem' }}>
                         <div onClick={() => link('')} style={{ cursor: 'pointer', backgroundColor: 'white', borderRadius: '20px 20px' }}>
                             <img height='55px' width='auto' src={contact.logo.url} style={{ flex: 1, borderRadius: '20px 20px' }} />
                         </div>
-                        <div style={{ textAlign: 'right', flex: 8, paddingRight: '1rem' }} >
+                        <div style={{ textAlign: 'right', flex: 6, paddingRight: '1rem' }} >
                             <Button onClick={() => link('apartments/forSell')}>
                                 <span style={{ fontSize: '1.2rem', fontWeight: '500', color: 'black' }} >דירות למכירה</span>
                             </Button>
@@ -159,15 +172,20 @@ export default function ButtonAppBar({ stat, backgroundColor }) {
                             </Button>
                             <Button onClick={() => link('contactUs')}> <span style={{ fontSize: '1.2rem', fontWeight: '500', color: 'black' }}  >צור קשר</span></Button>
                         </div>
-                        <Button href={`tel:+972${contact.phone}`} style={{ flex: 1 }}
-                            style={{ color: '#5F5A46' }}>
-                            <span style={{ fontSize: '1.2rem', fontWeight: '500', color: 'black' }} >{contact.phone}</span>
-
-                            <IconButton ><PhoneIcon style={{ color: 'blue' }} fontSize='inherit' /></IconButton></Button>
-
+                        <div style={{ flexDirection: 'row', display: 'flex' }}>
+                            <Button href={`tel:+972${contact.phone}`}
+                                style={{ color: '#5F5A46' }}>
+                                <span style={{ fontSize: '1.2rem', fontWeight: '500', color: 'black' }} >{contact.phone}</span>
+                                <IconButton ><PhoneIcon style={{ color: 'blue' }} fontSize='inherit' /></IconButton>
+                            </Button>
+                            <IconButton
+                                style={{ padding: '1rem' }}
+                                href={`https://api.whatsapp.com/send?phone=+972${contact.phone}&text=${contact.whatsApp}`}>
+                                <WhatsAppIcon style={{ color: 'green', fontSize: '28px' }} fontSize='inherit' />
+                            </IconButton>
+                        </div>
                     </Toolbar>
                 }
-
             </AppBar>
         </div>
     );

@@ -106,7 +106,7 @@ const ApartmentSell = () => {
                 <ReactMapGL
                     {...viewport}
                     width='100%'
-                    height="60vh"
+                    height="50vh"
                     mapStyle="mapbox://styles/mapbox/streets-v11"
                     onViewportChange={nextViewport => setViewport(nextViewport)}
                     mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}

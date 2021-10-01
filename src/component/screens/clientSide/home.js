@@ -87,7 +87,11 @@ const Home = () => {
             </div>
             }
 
-            {!mobileView && <ContactCommon type='home' messageType='generalMessages' itemName='' />}
+            {!mobileView && <ContactCommon
+                type='home'
+                messageType='generalMessages'
+                itemName=''
+            />}
 
             <div style={{
                 padding: !mobileView && '0 4rem', textAlign: 'center',
